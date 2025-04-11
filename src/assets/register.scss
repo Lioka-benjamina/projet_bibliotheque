@@ -1,0 +1,92 @@
+@import "./library/mixin.scss";
+@import "./variable/variable.scss";
+@font-face {
+    font-family: inter;
+    src: url(./Inter_28pt-Regular.ttf);
+}
+
+*{
+    @include body();
+}
+
+#pageRegister{
+    @include size();
+    @include flex();
+    background: grey;
+    form{
+        position: relative;
+        background: #fff;
+        padding: 7vw 1vw 1vw 1vw;
+        width: 25vw;
+        height: 35vw;
+        border-radius: .5vw;
+        #content-group{
+            #form-group{
+                #contenteInput{
+                    input{
+                        padding: .5vw;
+                        width: 100%;
+                        outline: none;
+                        margin-bottom: 1vw;
+                        &::placeholder{
+                            font-family: inter;
+                            font-size: 1vw;
+                        }
+                        border-top: none;
+                        border-left: none;
+                        border-right: none;
+                        // &:nth-last-child(1){
+                        //     margin-top: 1.5vw;
+                        // }
+
+                    }
+                }
+            }
+        }
+        #contentAction{
+            width: 100%;
+            // padding: 1vw;
+            #btnAction{
+                width: 100%;
+                padding: 0.5vw;
+                margin-top: 2vw;
+                border: none;
+                color: whitesmoke;
+                background: #252424;
+                font-family: inter;
+                border-radius: .3vw;
+                cursor: pointer;
+            }
+        }
+        #lienVersRegister{
+            width: 100%;
+            @include flex();
+            margin-top: 1vw;
+            p{
+                color: #0000008a;
+                font-family: inter;
+                font-size: .9vw;
+                .lien{
+                    text-decoration: none;
+                    color: $vert_pastel;
+                    font-family: inter;
+                }
+            }
+        }
+        .se_connecter{
+            position: absolute;
+            width: 20vw;
+            background: #252424;
+            padding: 2vw;
+            border-radius: .5vw;
+            top: -1vw;
+            left: 2.5vw;
+            @include flex();
+            h3{
+                color: whitesmoke;
+                font-family: inter;
+                font-weight: normal;
+            }
+        }
+    }
+}

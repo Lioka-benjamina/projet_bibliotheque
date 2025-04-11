@@ -1,0 +1,33 @@
+@mixin size($wd:100%, $ht:100vh){
+    width: $wd;
+    height: $ht;
+}
+
+@mixin flex($jc:center, $al:center , $fd : column){
+    display: flex;
+    justify-content: $jc;
+    align-items: $al;
+    flex-direction: $fd;
+}
+
+@mixin flexColumn($jc:start, $al:start){
+    display: flex;
+    flex-direction: column;
+    justify-content: $jc;
+    align-items: $al;
+}
+
+@mixin body(){
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@mixin btn($bg : #28c589 ,$pd : 0.5vw 3vw , $col : #fefefe){
+    background: $bg;
+    border: none;
+    padding: $pd;
+    color: $col;
+    font-family: inter;
+    border-radius: .3vw;
+}

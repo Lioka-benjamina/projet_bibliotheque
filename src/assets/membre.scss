@@ -1,0 +1,151 @@
+@import "./library/mixin.scss";
+@import "../assets/variable/variable.scss";
+
+@font-face {
+    font-family: inter;
+    src: url(./Inter_28pt-Regular.ttf);
+}
+
+*{
+    @include body()
+}
+
+.membre{
+    width: 100vw;
+    position: relative;
+    .corpsMembre{
+        width: 100vw;
+        height: calc(100vh - 4vw);
+        display: flex;
+        .principaleMembre{
+            flex-grow: 1;
+            background: #e6f0e8;
+            padding: 4vw;  
+            overflow-y: auto;
+            .titleAndAjout{
+                display: flex;
+                justify-content: space-between;
+                .recherche{
+                    border-radius: .3vw;
+                    border: 2px solid #aaa;
+                    outline: none;
+                    background: none;
+                    padding: .3vw 1vw;
+                    color: #aaa;
+                    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                    font-size: 1vw;
+                    width: 40vw;
+                    &:focus{
+                        border: 2px solid $vert_pastel;
+
+                    }
+                }
+                h3{
+                    font-family: inter;
+                    font-weight: normal;
+                    opacity: .8;
+                }
+                .ajout{
+                    background: #28c589;
+                    border: none;
+                    padding: 0.5vw 3vw;
+                    color: $blanc_casse;
+                    font-family: inter;
+                    border-radius: .3vw;
+                    transition: .2s;
+                    cursor: pointer;
+                    &:hover{
+                        background: $vert_fonce;
+                        transition: .2s;
+                    }
+                }
+            }
+            hr{
+                margin: .5vw 0;
+            }
+            .listePersonne{
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1vw;
+                margin: 2vw 0;
+                .aucunMembre{
+                    width: 100%;
+                    margin-top: 10vw;
+                    p{
+                        text-align: center;
+                        font-family: inter;
+                        text-transform: uppercase;
+                        font-size: 3vw;
+                        color: gray;
+                    }
+                }
+                .personne{
+                    // flex: 1;
+                    // width: 18vw;
+                     width: calc((100% - 3vw) / 4); // 4 cartes par ligne avec 1vw d'espacement entre elles
+                     margin-bottom: 2vw;
+                    background: $blanc_casse;
+                    padding: 1vw;
+                    border-radius: .5vw;
+                    .imageAndNom{
+                        display: flex;
+                        width: 100%;
+                        align-items: center;
+                        .img{
+                            width: 5vw;
+                            height: 5vw;
+                            border-radius: 50%;
+                            background: #000;
+                            margin-right: 1vw;
+                            img{
+                                width: 100%;
+                                height: 100%;
+                                border-radius: 50%;
+                            }
+                        }
+                        .name{
+                            h4{
+                                font-family: inter;
+                                opacity: .8;
+                            }
+                        }
+                    }
+                    hr{
+                        margin: 1vw 0;
+                    }
+                    .info{
+                        margin-left: 0.5vw;
+                        p{
+                            font-family: inter;
+                            color: $vert_fonce;
+                            span{
+                                font-size: 1vw;
+                                color: #000;
+                                opacity: .9;
+                            }
+                        }
+                    }
+                    .action{
+                        margin-top: 1vw;
+                        display: flex;
+                        gap: 2vw;
+                        // justify-content: center;
+                        margin-left: .6vw;
+                        .btn_action{
+                            background: none;
+                            border: none;
+                            cursor: pointer;
+                            .font_action{
+                                color: $vert_pastel;
+                                &:hover{
+                                    color: $vert_fonce;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

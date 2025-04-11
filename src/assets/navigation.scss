@@ -1,0 +1,57 @@
+@import "./library/mixin.scss";
+@import "./variable/variable.scss";
+
+@font-face {
+    font-family: inter;
+    src: url(./Inter_28pt-Regular.ttf);
+}
+
+*{
+    @include body();
+}
+
+// NAVIGATION
+.menu{
+    width: 15vw;
+    padding: 1vw 0 1vw 0;
+    height: 100%;
+    background: $vert_fonce;
+    position: sticky;
+    top: 0;
+    .menuContent{
+        width: 100%;
+        padding: 1vw;
+        display: flex;
+        flex-direction: column;
+        gap: .5vw;
+        &:nth-child(2){
+            margin-top: 1vw;
+        }
+        &:nth-child(3){
+            margin-top: 2vw;
+        }
+        .mc{
+            display: flex;
+            align-items: center;
+            gap: 1vw;
+            padding: 0.5vw 2vw;
+            .lien{
+                color: #fefefe;
+                font-family: inter;
+                text-decoration: none;
+                text-transform: capitalize;
+                font-size: 1vw;
+                opacity: .8;
+                // display: block;
+            }
+            .fontCol{
+                color: #fefefe;
+                opacity: .8;
+            }
+            &:hover{
+                background: #28a374;
+                border-radius: .3vw;
+            }
+        }
+    }
+}

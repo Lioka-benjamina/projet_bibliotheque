@@ -1,0 +1,71 @@
+@import "./library/mixin.scss";
+@import "./variable/variable.scss";
+
+@font-face {
+    font-family: inter;
+    src: url(./Inter_28pt-Regular.ttf);
+}
+
+*{
+    @include body();
+}
+
+
+.pagination-container {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    margin-top: 1vw;
+    padding: 0;
+  
+    .pagination-page,
+    .pagination-previous,
+    .pagination-next,
+    .label {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: .5vw;
+      padding: 8px 14px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.1s ease;
+  
+      &:hover {
+        background-color: #e2e6ea;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+      }
+    }
+  
+    .active-page {
+      background-color: $vert_fonce; // Indigo-600
+      color: #aaa;
+      border-color: $vert_fonce;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+      transform: scale(1.05);
+    }
+  
+    .disabled-page {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  
+    .pagination-previous,
+    .pagination-next {
+      svg {
+        width: 15px;
+        height: 15px;
+        stroke: #4b5563; // Gray-700
+      }
+  
+      &:hover svg {
+        stroke: #1f2937; // Gray-900
+      }
+    }
+  }
+  

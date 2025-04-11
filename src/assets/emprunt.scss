@@ -1,0 +1,411 @@
+@import "./library/mixin.scss";
+@import "../assets/variable/variable.scss";
+
+@font-face {
+    font-family: inter;
+    src: url(./Inter_28pt-Regular.ttf);
+}
+
+*{
+    @include body();
+}
+
+.emprunt{
+    width: 100vw;
+    position: relative;
+    .empruntAccueil{
+        width: 100vw;
+        height: calc(100vh - 4vw);
+        display: flex;
+        .empruntContent{
+            flex-grow: 1;
+            background: #e6f0e8;
+            padding:0 1vw 1vw 1vw;  
+            overflow-y: auto;
+            .actuStat{
+                width: 100%;
+                padding: .5vw ;
+                margin: 2vw 0;
+                // background: red;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                position: relative;
+                .empt{
+                    padding-left: 0.5vw;
+                    font-family: inter; 
+                    font-size: 1.5vw;
+                    opacity : .8;
+                    text-transform: capitalize;
+                } 
+                .statAnal{
+                    width: 65%;
+                    // background: #ffffff;
+                    border-radius: .3vw;
+                    display: flex;
+                    // margin-bottom: 1vw;
+                    align-items: center;
+                    input{
+                        width: 85%;
+                        margin-right: .5vw;
+                        padding: .3vw 1.3vw .3vw 2vw;
+                        outline: none;
+                        color: rgba(0, 0, 0, 0.74);
+                        font-size: .9vw;
+                        font-family: inter;
+                        &::placeholder{
+                            color: black;
+                            opacity: .8;
+                            font-size: .9vw;
+                            font-family: inter;
+                        }
+                    }
+                    .iconFilter{
+                        color: $vert_fonce;
+                        font-size: 1.5vw;
+                    }
+                    button{
+                        border: none;
+                        color: white;
+                        background: $vert_fonce ;
+                        border-radius: .3vw;
+                        margin-left: .3vw;
+                        padding: .5vw 1.3vw;
+                        cursor: pointer;
+                    }
+                }
+                
+                .empruntEnCour{
+                    width: 100%;
+                    background: #ffffff;
+                    // padding: 1vw;
+                    // overflow-x: scroll;
+                    table {
+                        border-collapse: collapse;
+                        width: 100%;
+                        // margin: 20px auto;
+                        background-color: #fff;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                        th, td {
+                            padding: .6vw;
+                            border: 1px solid #ddd;
+                            text-align: center;
+                            font-family: inter;
+                            font-size: 1vw;
+                            .rendre{
+                                display: flex;
+                                gap: .5vw;
+                                align-items: center;
+                                .iconRendre{
+                                    color: #AEC6CF;
+                                }
+                                button{
+                                    background: none;
+                                    border: none;
+                                    padding: 0.1vw;
+                                    cursor: pointer;
+                                }
+                                p{
+                                    font-family: inter;
+                                    text-transform: capitalize;
+                                    font-size: .9vw;
+                                }
+                            }
+                            .detail{
+                                display: flex;
+                                gap: .8vw;
+                                align-items: center;
+                                .icondetail{
+                                    color: #AEC6CF;
+                                }
+                                button{
+                                    background: none;
+                                    border: none;
+                                    padding: 0.1vw;
+                                    cursor: pointer;
+                                }
+                                p{
+                                    font-family: inter;
+                                    text-transform: capitalize;
+                                    font-size: .9vw;
+                                }
+                            }
+                        }
+                        th {
+                            background-color: $vert_fonce;
+                            color: white;
+                            text-transform: uppercase;
+                            font-family: inter;
+                            font-size: .8vw;
+                            // cursor: pointer;
+                        //   opacity: .8;
+                        }
+                        tr:nth-child(even) {
+                          background-color: #f9f9f9;
+                        }
+                    
+                        tr:hover {
+                          background-color: #f1f1f1;
+                        }
+            
+                        
+                      }
+                  
+                  
+                  
+                }
+            
+                .populaire{
+                    position: absolute;
+                    right: 0;
+                    width: 30%;
+                    height: 24vw;
+                    overflow-y: scroll;
+                    padding: 1vw;
+                    background: #ffffff;
+                    border-radius: .3vw;
+                    h3{
+                        font-family: inter;
+                        font-size: 1.5vw;
+                        opacity: .9;
+                        
+                        // font-weight: normal;
+                    }
+                    .populaireContent{
+                        display: flex;
+                        gap: 2vw;
+                        margin: 1.5vw 0;
+                        padding: 0.5vw;
+                        border-radius: .3vw;
+                        background: #f8f8f8;
+                        .contenu{
+                            h4{
+                                font-family: inter;
+                                font-size: 1.2vw;
+                                opacity: .8;
+                            }
+                            h5{
+                                font-family: inter;
+                                font-size: 1vw;
+                                opacity: .6;
+                                font-weight: normal;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .newEmpreint{
+                // width:100%;
+                padding: 0.5vw;
+                display: flex;
+                gap: 1vw;
+                height: 26vw;
+                .new_empreint_ajout{
+                    width: 45vw;
+                    background: $blanc_casse;
+                    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+                    .title{
+                        padding: 0.5vw;
+                        width: 100%;
+                        background: $dore_doux;
+                        .titleContent{
+                            opacity: .9;
+                            font-family: inter;
+                            font-weight: normal;
+                        }
+                    }
+                    form{
+                        padding: 0.5vw;
+                        .formulaire{
+                            margin-bottom: 1vw;
+                            label{
+                                display: block;
+                                font-family: inter;
+                                font-size: 1vw;
+                                font-weight: bold;
+                            }
+                            input{
+                                width: 100%;
+                                padding: .5vw 1vw;
+                                outline: none;
+                                font-size: 1vw;
+                                font-family: inter;
+                                border-color: rgba(117, 116, 116, 0.322);
+                                border-radius: .3vw;
+                                &::placeholder{
+                                    font-family: inter;
+                                    font-size: .9vw;
+                                }
+                            }
+                            select{
+                                width: 100%;
+                                padding: .5vw 1vw;
+                                outline: none;
+                                option{
+                                    font-size: 1vw;
+                                    font-family: inter;
+                                }
+                            }
+                        }
+                        button{
+                            width: 20vw;
+                            padding: 0.5vw 1vw;
+                            font-family: inter;
+                            cursor: pointer;
+                            border-radius: .3vw;
+                            border: none;
+                            background:$dore_doux;
+                            text-transform: capitalize;
+                        }
+                    }
+                }
+
+                .retard{
+                    width: calc(100vw - 45vw);
+                    background: $blanc_casse;
+                    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+                    height: 100%;
+                    overflow-y: auto;
+                    .title{
+                        width: 100%;
+                        background: $blue;
+                        padding: 0.5vw;
+                        h3{
+                            opacity: .9;
+                            font-family: inter;
+                            font-weight: normal;
+                        }
+                    }
+                    .boxList{
+                        width: 100%;
+                        padding: 0.5vw;
+                        .list{
+                            width: 100%;
+                            display: flex;
+                            padding: 0 1vw;
+                           justify-content: space-between; 
+                           .nom{
+                            font-family: inter;
+                            font-size: 1vw;
+                           }
+                           .livre{
+                            font-family: inter;
+                            font-size: 1vw;
+                            span {
+                                font-weight: bold;
+                                opacity: .8;
+                                font-size: 1vw;
+                            }
+                           }
+                        }
+                        hr{
+                            margin-bottom: 1vw;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// RENDREMODAL
+
+.modalRendre{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    visibility: hidden;
+    .overlay{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index:1;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        background: rgba(0, 0, 0, 0.5);
+    }
+    .modal{
+        width: 40vw;
+        padding: 1vw;
+        z-index: 5;
+        background: white;
+        border-radius: .5vw;
+        visibility: hidden;
+        opacity: 0;
+        position: relative;
+        h3{
+            font-family: inter;
+            opacity:.8;
+        }
+        p{
+            font-family: inter;
+            margin-top: .5vw;
+            font-size: 1.1vw;
+            span{
+                font-weight: bold;
+                text-transform: capitalize;
+            }
+        }
+        .action{
+            width: 100%;
+            margin-top: 1vw;
+            display: flex;
+            gap: 1vw;
+            // justify-content: space-around;
+            button{
+                border: none;
+                width: 12vw;
+                padding: .5vw;
+                border-radius: .2vw;
+                font-family: inter;
+                font-size: 1vw;
+                cursor: pointer;
+                &:hover{
+                        background: $vert_fonce;
+                        color: rgba(255, 255, 255, 0.801);
+                }
+            }
+        }
+        .close{
+            position: absolute;
+            top: 1vw;
+            right: 1vw;
+            opacity: .6;
+            cursor: pointer;
+            
+        }
+    }
+}
+
+.modalRendre.active{
+    transition: all .2s ease-in;
+    visibility: visible;
+}
+
+.modalRendre.active .overlay{
+    opacity: 1;
+}
+
+.modalRendre.active .modal{
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.2s 0.1s ease;
+}
+
+
+.selekt{
+    font-family: inter;
+    font-size: 1vw;
+    &::placeholder{
+        font-family: inter;
+    }
+    
+}
+
+

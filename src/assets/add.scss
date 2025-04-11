@@ -1,0 +1,200 @@
+@import "./library/mixin.scss";
+@import "./variable/variable.scss";
+
+@font-face {
+    font-family: inter;
+    src: url(./Inter_28pt-Regular.ttf);
+}
+
+*{
+    @include body();
+}
+
+.modalAdd{
+    width: 100%;
+    height: 100vh;
+    @include flex();
+    position: fixed;
+    z-index: 1;
+    visibility: hidden;
+    .overlay{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        background: rgba(0,0,0,0.5);
+        transition: all 0.3s 0.2s ease-out;
+    }
+    .modal{
+        width: 60vw;
+        padding: 1vw;
+        border-radius: .5vw;
+        z-index: 2;
+        visibility: hidden;
+        opacity: 0;
+        background: $blanc_pur;
+        .titleAndClose{
+            width: 100%;
+            @include flex($jc:space-between , $fd : row);
+            h3{
+                color: $texte;
+                font-family: calibri;
+            }
+            button{
+                width: 1.8vw;
+                padding: .2vw;
+                border-radius: 50%;
+                @include flex();
+                background: transparent;
+                border: 2px solid #aaa;
+                color: $texte;
+                cursor: pointer;
+                &:hover{
+                    border-color: $vert_pastel;
+                    color: $vert_pastel;
+                }
+            }
+        }
+        hr{
+            margin: 1vw 0;
+        }
+        .form-group{
+            width: 100%;
+            position: relative;
+            .input-container {
+                position: relative;
+                width: 100%;
+                margin-bottom: 1vw;
+                .input {
+                    width: 60%;
+                    padding:1vw 3vw 1vw 1vw;
+                    font-size: 1vw;
+                    border: .2vw solid #aaa;
+                    outline: none;
+                    border-radius: .5vw;
+                    background: transparent;
+                    font-family: inter;
+                    color: $texte;
+                    &:focus{
+                        border-color: $vert_pastel;
+                    }
+                    &:focus ~ i {
+                        color :$vert_pastel;
+                    }
+                    // width: 100%;
+                    // padding: 12px 40px 12px 10px;
+                    // font-size: 16px;
+                    // border: 2px solid #aaa;
+                    // border-radius: 8px;
+                    // outline: none;
+                    // background: transparent;
+                    // color: black;
+                    // transition: all 0.3s ease;
+                    // &:focus {
+                    //     border-color: #4caf50;
+                    //     box-shadow: 0 0 10px rgba(76, 175, 80, 0.7);
+                    // }
+
+                    // &:focus ~ label,
+                    // &:valid ~ label {
+                    //     top: 5px;
+                    //     font-size: 12px;
+                    //     color: #4caf50;
+                    //     transform: translateY(-50%);
+                    // }
+
+                    // &:focus ~ i {
+                    //     color: #4caf50;
+                    // }
+               
+                }
+                label{
+                    font-size: 1.3vw;
+                    color: #aaa;
+                    font-family: inter;
+                    display: block;
+                }
+
+                i {
+                    position: absolute;
+                    right: 24vw;
+                    top: 50%;
+                    color: #aaa;
+                    font-size: 1.5vw;
+                }
+
+                // i {
+                //     position: absolute;
+                //     right: 10px;
+                //     top: 65%;
+                //     transform: translateY(-50%);
+                //     color: #aaa;
+                //     font-size: 18px;
+                //     transition: color 0.3s ease;
+                // }
+
+            }
+
+            .image-container{
+                position: absolute;
+                top: 0vw;
+                right: 0vw;
+                padding: 1vw;
+                @include flex();
+                gap: .5vw;
+                .image{
+                    width: 20vw;
+                    height: 20vw;
+                    border-radius: 50%;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 50%;
+                    }
+                }
+                .fichier{
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    position: absolute;
+                    bottom: 1.5vw;
+                    right: 4.5vw;
+                    .fontCam{
+                        color: #aaa;
+                        font-size: 2vw;
+                    }
+                }
+            }
+            .btn_action{
+                position: absolute;
+                bottom: 0;
+                padding: .3vw 0;
+                right: 3vw;
+                background: none;
+                border: none;
+                font-size: 1.5vw;
+                color: $vert_fonce;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.modalAdd.active{
+    visibility: visible;
+    transition: all 0.2s 0.1s ease;
+}
+
+.modalAdd.active .overlay{
+    opacity: 1;
+    transition: all 0.3s 0.2s ease-out;
+}
+
+.modalAdd.active .modal{
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.9s 0.1s ease;
+}

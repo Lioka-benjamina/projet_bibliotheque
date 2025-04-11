@@ -1,0 +1,206 @@
+@import "./library/mixin.scss";
+@import "./variable/variable.scss";
+@font-face {
+    font-family: inter;
+    src: url(./Inter_28pt-Regular.ttf);
+}
+
+*{
+    @include body()
+}
+
+.livre{
+    width: 100vw;
+    .corpsLivre{
+        // width: 100vw;
+        height: calc(100vh - 4vw);
+        display: flex;
+        .principale{
+            background: $vert_clair;
+            padding: 4vw;
+            overflow-x: auto;
+            &::-webkit-scrollbar {
+                width: 8px; /* Pour les barres verticales */
+            }
+            &::-webkit-scrollbar-track {
+                background: #f1f1f1; /* Couleur de fond */
+                border-radius: 3px;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: #aaa; /* Couleur principale */
+                border-radius: 5px;
+            }
+            .headLivre{
+                width: 100%;
+                .titleLivre{
+                    display: flex;
+                    gap: 2vw;
+                    .boxlivre{
+                        h2{
+                            font-family: inter;
+                            opacity: .8;
+                        }
+                    }
+                    .search{
+                        display: flex;align-items: center;justify-content: center;
+                        input{
+                            outline: none;
+                            border: 2px solid #aaa !important;
+                            color: #aaa;
+                            font-family: inter;
+                            &:focus{
+                                border-color: $vert_pastel !important; 
+                            }
+                        }
+                        button{
+                            background: none;
+                            border: none;
+                            outline: none;
+                            display: flex;
+                            transition: .3s;
+                            .icon{
+                                margin-left: 1vw;
+                                opacity: .5;
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                }
+                .contentLink{
+                    display: flex;
+                    gap: 2vw;
+                    margin: 1vw 0 0 0 ;
+                    .lien{
+                        font-family: inter;
+                        color: black;
+                        opacity: .7;
+                        font-size: 1.1vw;
+                        text-decoration: none;
+                        .active {
+                            color : green
+                        }
+                    }
+                }
+            }
+
+            .bodyLivre{
+                width: 100%;
+                background: #ffffff;
+                margin-top: 1vw;
+                table{
+                    border-collapse: collapse;
+                    width: 100%;
+                    background: #fff;
+                    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+                    
+                    th,td{
+                        padding: .6vw;
+                        border: 1px solid #ddd;
+                        text-align: center;
+                        font-family: inter;
+                        text-transform: capitalize;
+                    }
+                    th{
+                        border: 1px solid #ccc;
+                        background: #dadada;
+
+                    }
+                    td{
+                        font-size: 1vw;
+                        .action{
+                            display: flex;
+                            justify-content: center;align-items: center;
+                            gap: .5vw;
+                            button{
+                                background: none;
+                                border: none;
+                                cursor: pointer;
+                                .font_action{
+                                    color: #aaa;
+                                    &:hover{
+                                        transform: scale(1.1);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    tr:nth-child(even) {
+                        background-color: #f9f9f9;
+                    }
+                    tr:hover{
+                        background-color: #f1f1f1;
+                    }
+                }
+            }
+
+            .addLivre{
+                width: 100%;
+                background: #fefffe;
+                border-radius: .5vw;
+                padding: 1vw;
+                margin-top: 3vw;
+                .title{
+                    width: 100%;
+                    h2{
+                        font-family: inter;
+                        opacity: .8;
+                    }
+                }
+                hr{
+                    margin: .5vw 0;
+                }
+                form{
+                    width: 100%;
+                    .ligneForm{
+                        width: 100%;
+                        display: flex;
+                        gap: 1vw;
+                        margin-bottom: 1vw;
+                        .inputContent{
+                            display: flex;
+                            flex-direction: column;
+                            width: 50%;
+                            label{
+                                font-family: inter;
+                                text-transform: capitalize;
+                                opacity: .8;
+
+                            }
+                            input{
+                                padding: 0.8vw;
+                                border-radius: .3vw;
+                                border : 1px solid #ddd;
+                                outline: none;
+                                opacity: .8;
+                                font-family: inter;
+                                font-size: 1vw;
+                                &:focus{
+                                    border : 2px solid #2684FF;
+                                    // border-color: #2684FF;
+                                }
+                            }
+                            
+
+                        }
+
+                        .ajout{
+                            width: 100%;
+                            padding: 0.8vw;
+                            border : 1px solid #ddd;
+                            border-radius: .3vw;
+                            font-family: inter;
+                            text-transform: capitalize;
+                            opacity: .8;
+                            cursor: pointer;
+                            transition: .2s;
+                            &:hover{
+                                background: #d4d4d4;
+                                transition: .2s;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

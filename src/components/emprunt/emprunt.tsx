@@ -4,18 +4,102 @@ import { Header } from "../header/header"
 import { Navigation } from "../navigation/navigation"
 import { faFilter, faUndo } from "@fortawesome/free-solid-svg-icons"
 import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../redux/store"
+import { AppDispatch, RootState } from "../redux/store"
 import { setRendreModal } from "../redux/slice/modalSlice"
 import { RendreModal } from "../modal/rendre"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Select from "react-select"
+import { FieldValues, useForm } from "react-hook-form"
+import { createEmprunt, findAllEmprunt } from "../redux/asyncThunk/empruntThunk"
+import { toast } from "react-toastify"
+import { resetCreateState } from "../redux/slice/empruntSlice"
+
+interface Membre {
+    id : number
+    nom : string
+    prenom : string
+    numero_mobile : number
+    email : string
+    genre : string
+    image : string
+    date_adhesion : Date
+}
+
+interface Livre {
+    id : number
+    titre : string
+    auteur : string
+    categorie : string
+    editeur : string
+}
+
+// Ajoutez cette interface pour définir le type des options du Select
+interface SelectOption {
+    value: string | number;
+    label: string;
+}
 
 export const Emprunt = () =>{
     
-        const dispatch = useDispatch()
-    
+        const dispatch = useDispatch<AppDispatch>()
+        const membreState = useSelector((state : RootState) => state.membreStore)
+        const livreState = useSelector((state : RootState)=>state.livreStore)
+        const empruntState = useSelector((state : RootState)=>state.empruntStore)
         const modalState = useSelector((state : RootState) => state.modalStore)
         const { rendreModal } = modalState
+        const {allMembre} = membreState
+        const {allLivre} = livreState
+        const {addEmprunt} = empruntState
+
+        const listeAdherants = allMembre
+        const [selectAdherant , setSelectedAdherant] = useState("")
+
+        const listeLivre = allLivre
+        const [selectLivre , setSelectLivre] = useState("")
+
+        const {handleSubmit , reset , register} = useForm()
+
+        const onSubmit = (data: FieldValues) => {
+            console.log("Données soumises:", { selectAdherant, selectLivre, date_emprunt: data.date_emprunt, date_retour: data.date_retour });
+            
+            // Vérification plus explicite des valeurs
+            if (!selectAdherant || !selectLivre || !data.date_emprunt || !data.date_retour) {
+                toast.error("Veuillez sélectionner les champs");
+                return;
+            }
+        
+            
+            // Création et envoi du FormData
+            const formData = new FormData();
+            formData.append("membre", selectAdherant);
+            formData.append("livre", selectLivre);
+            formData.append("date_emprunt", data.date_emprunt);
+            formData.append("date_retour", data.date_retour);
+        
+            // Ajoutez un log pour voir ce qui est envoyé
+            console.log("FormData créé, contenu:");
+            for (let pair of formData.entries()) {
+                console.log(pair[0] + ': ' + pair[1]);
+            }
+        
+            dispatch(createEmprunt(formData));
+        };
+        
+        useEffect(()=>{
+            if(addEmprunt.create_ok){
+                toast.success("emprunt ajouter")
+                reset()
+                setSelectLivre("")
+                setSelectedAdherant("")
+                dispatch(resetCreateState())
+            }
+        },[addEmprunt.create_ok,dispatch,reset])
+
+        // Charger les données nécessaires au chargement du composant
+        useEffect(() => {
+            dispatch(findAllEmprunt());
+        }, [dispatch]);
+
         
         const openRendreModal = () =>{
             dispatch(setRendreModal({
@@ -23,13 +107,44 @@ export const Emprunt = () =>{
             }))
         }
 
-        const bookOptions = [
-            { value: "jesus_redempteur", label: "Jésus, le rédempteur" },
-            { value: "fixe_les_yeux", label: "Fixé les yeux sur LUI" },
-            { value: "comment_prier", label: "Comment Prier" }
-        ];
+        // Options de sélection sécurisées
+    const getMembreOptions = (): SelectOption[] => {
+        if (!allMembre || !allMembre.data || !Array.isArray(allMembre.data)) {
+            return [];
+        }
+        return allMembre.data.map((adherent: Membre) => ({
+            value: adherent.id,
+            label: `${adherent.nom} ${adherent.prenom}`
+        }));
+    };
 
-        const  [selectedBook, setSelectedBook] :any= useState(null);
+    const getLivreOptions = (): SelectOption[] => {
+        if (!allLivre || !allLivre.data || !Array.isArray(allLivre.data)) {
+            return [];
+        }
+        return allLivre.data.map((livre: Livre) => ({
+            value: livre.id,
+            label: livre.titre
+        }));
+    };
+
+    // Trouver le membre et le livre sélectionnés de manière sécurisée
+    const getSelectedMembre = () => {
+        if (!allMembre?.data || !Array.isArray(allMembre.data) || !selectAdherant) {
+            return null;
+        }
+        const membre = allMembre.data.find(m => m.id === parseInt(selectAdherant));
+        return membre ? { value: selectAdherant, label: `${membre.nom} ${membre.prenom}` } : null;
+    };
+
+
+    const getSelectedLivre = () => {
+        if (!allLivre?.data || !Array.isArray(allLivre.data) || !selectLivre) {
+            return null;
+        }
+        const livre = allLivre.data.find(l => l.id === parseInt(selectLivre));
+        return livre ? { value: selectLivre, label: livre.titre } : null;
+    };
 
 
         return(
@@ -94,137 +209,10 @@ export const Emprunt = () =>{
                                                     </div>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>003</td>
-                                                <td>Jean pierre</td>
-                                                <td>Commentaire Esaie</td>
-                                                <td>12/01/25</td>
-                                                <td>25/01/25</td>
-                                                <td>0jrs</td>
-                                                <td>à jours</td>
-                                                <td>
-                                                    <div className="rendre">
-                                                        <button type="submit"><FontAwesomeIcon icon={faUndo} className="iconRendre" onClick={openRendreModal}/></button>
-                                                        <p style={{cursor : "pointer"}} onClick={openRendreModal}>à rendre</p>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>004</td>
-                                                <td>Ravo eleniste</td>
-                                                <td>Grace </td>
-                                                <td>12/01/25</td>
-                                                <td>25/01/25</td>
-                                                <td>-1jrs</td>
-                                                <td>en retard</td>
-                                                <td>
-                                                    <div className="rendre">
-                                                        <button type="submit"><FontAwesomeIcon icon={faUndo} className="iconRendre" onClick={openRendreModal}/></button>
-                                                        <p style={{cursor : "pointer"}} onClick={openRendreModal}>à rendre</p>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>014</td>
-                                                <td>Andrehy</td>
-                                                <td>Eschatologie </td>
-                                                <td>12/01/25</td>
-                                                <td>25/01/25</td>
-                                                <td>3jrs</td>
-                                                <td>en cours</td>
-                                                <td>
-                                                    <div className="rendre">
-                                                        <button type="submit"><FontAwesomeIcon icon={faUndo} className="iconRendre" onClick={openRendreModal}/></button>
-                                                        <p style={{cursor : "pointer"}} onClick={openRendreModal}>à rendre</p>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>001</td>
-                                                <td>Jean Dupont</td>
-                                                <td>Langages de l'amour</td>
-                                                <td>12/01/25</td>
-                                                <td>25/01/25</td>
-                                                <td>3jrs</td>
-                                                <td>en cours</td>
-                                                <td>
-                                                    <div className="rendre">
-                                                        <button type="submit"><FontAwesomeIcon icon={faUndo} className="iconRendre" onClick={openRendreModal}/></button>
-                                                        <p style={{cursor : "pointer"}} onClick={openRendreModal}>à rendre</p>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>002</td>
-                                                <td>Luc Hérvé</td>
-                                                <td>tout pour Lui</td>
-                                                <td>23/01/25</td>
-                                                <td>30/01/25</td>
-                                                <td>4jrs</td>
-                                                <td>en cours</td>
-                                                <td>
-                                                    <div className="rendre">
-                                                        <button type="submit"><FontAwesomeIcon icon={faUndo} className="iconRendre" onClick={openRendreModal}/></button>
-                                                        <p style={{cursor : "pointer"}} onClick={openRendreModal}>à rendre</p>
-                                                    </div>
-                                                </td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
 
-                                {/* <div className="populaire">
-                                    <h3>Livres populaires</h3>
-                                    <div className="populaireContent">
-                                        <FontAwesomeIcon icon={faThumbsUp}/>
-                                        <div className="contenu">
-                                            <h4>prince de la paix</h4>
-                                            <h5>125 emprunts</h5>
-                                        </div>
-                                    </div>
-                                    <div className="populaireContent">
-                                        <FontAwesomeIcon icon={faThumbsUp}/>
-                                        <div className="contenu">
-                                            <h4>Commentaire du nouveau testament</h4>
-                                            <h5>225 emprunts</h5>
-                                        </div>
-                                    </div>
-                                    <div className="populaireContent">
-                                        <FontAwesomeIcon icon={faThumbsUp}/>
-                                        <div className="contenu">
-                                            <h4>Une vie de prière</h4>
-                                            <h5>92 emprunts</h5>
-                                        </div>
-                                    </div>
-                                    <div className="populaireContent">
-                                        <FontAwesomeIcon icon={faThumbsUp}/>
-                                        <div className="contenu">
-                                            <h4>tout par grace</h4>
-                                            <h5>105 emprunts</h5>
-                                        </div>
-                                    </div>
-                                    <div className="populaireContent">
-                                        <FontAwesomeIcon icon={faThumbsUp}/>
-                                        <div className="contenu">
-                                            <h4>Comment evangéliser</h4>
-                                            <h5>95 emprunts</h5>
-                                        </div>
-                                    </div>
-                                    <div className="populaireContent">
-                                        <FontAwesomeIcon icon={faThumbsUp}/>
-                                        <div className="contenu">
-                                            <h4>Prière des incrédule</h4>
-                                            <h5>115 emprunts</h5>
-                                        </div>
-                                    </div>
-                                    <div className="populaireContent">
-                                        <FontAwesomeIcon icon={faThumbsUp}/>
-                                        <div className="contenu">
-                                            <h4>L'evangile selon Dieu</h4>
-                                            <h5>101 emprunts</h5>
-                                        </div>
-                                    </div>
-                                </div> */}
                             </div>
 
                             <div className="newEmpreint">
@@ -232,30 +220,40 @@ export const Emprunt = () =>{
                                     <div className="title">
                                         <h3 className="titleContent">Ajouter nouvelle emprunt</h3>
                                     </div>
-                                    <form action="">
+                                    <form onSubmit={handleSubmit(onSubmit)}>
                                         <div className="formulaire">
                                             <label htmlFor="">Nom de l'emprunteur</label>
-                                            <input type="text" name="" id="" placeholder="jean baptist"/>
+                                            <Select
+                                                options={getMembreOptions()}
+                                                value={getSelectedMembre()}
+                                                onChange={(selectedOption: SelectOption | null) => 
+                                                    selectedOption && setSelectedAdherant(selectedOption.value.toString())}
+                                                placeholder="Tapez le nom de l'adhérent"
+                                                isSearchable
+                                                className="selekt"
+                                            />
                                         </div>
                                         <div className="formulaire">
                                             <label htmlFor="">Séléctionnez un livre</label>
                                             <Select
-                                                options={bookOptions} 
-                                                value={selectedBook}
-                                                onChange={setSelectedBook}
+                                                options={getLivreOptions()}
+                                                value={getSelectedLivre()}
+                                                onChange={(selectedOption: SelectOption | null) => 
+                                                    selectedOption && setSelectLivre(selectedOption.value.toString())}
                                                 placeholder="Choisissez votre livre préféré"
-                                                isSearchable className="selekt"
+                                                isSearchable
+                                                className="selekt"
                                             />
                                         </div>
                                         <div className="formulaire">
                                             <label htmlFor="">Date de l'emprunt</label>
-                                            <input type="date" name="" id="" />
+                                            <input type="date" id="" {...register("date_emprunt", { required: true })} />
                                         </div>
                                         <div className="formulaire">
                                             <label htmlFor="">Date de retour</label>
-                                            <input type="date" name="" id="" />
+                                            <input type="date" id="" {...register("date_retour", { required: true })} />
                                         </div>
-                                        <button>ajouter</button>
+                                        <button type="submit">ajouter</button>
                                     </form>
                                 </div>
                                 <div className="retard">

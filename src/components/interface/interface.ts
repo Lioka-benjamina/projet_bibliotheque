@@ -24,3 +24,11 @@ interface Livre {
     categorie : string
     editeur : string
 }
+
+interface Emprunt {
+    id : number
+    membre : number
+    livre :number
+    date_emprunt : Date
+    date_retour : Date
+}

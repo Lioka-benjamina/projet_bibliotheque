@@ -99,7 +99,7 @@ export const MembreSlice = createSlice({
                 state.allMembre.data = state.allMembre.data.filter(item => item.id != action.payload.id);
             })
             .addCase(deleteMembre.rejected, (state, action) => {
-                state.loading = true,
+                state.loading = false,
                 state.error = {status: true, value: action.error.message}
             })
     },

@@ -1,8 +1,8 @@
+import "../../assets/navigation.scss"
 import { faBell, faBookReader, faChartLine, faCogs, faColumns, faHandshake, faLifeRing, faSignIn, faSignOut, faUndoAlt, faUser } from "@fortawesome/free-solid-svg-icons"
 import { faBookBookmark } from "@fortawesome/free-solid-svg-icons/faBookBookmark"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link } from "react-router-dom"
-import "../../assets/navigation.scss"
 
 export const Navigation = () =>{
     return(
@@ -53,10 +53,10 @@ export const Navigation = () =>{
                         <FontAwesomeIcon icon={faUser} className="fontCol"/>
                         <Link to={""} className="lien">profil</Link>
                     </div>
-                    <div className="mc">
+                    {/* <div className="mc">
                         <FontAwesomeIcon icon={faSignIn} className="fontCol"/>
                         <Link to={""} className="lien">connexion</Link>
-                    </div>
+                    </div> */}
                     <div className="mc">
                         <FontAwesomeIcon icon={faSignOut} className="fontCol"/>
                         <Link to={""} className="lien">deconnexion</Link>

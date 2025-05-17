@@ -1,65 +1,61 @@
-import "../../assets/header.scss"
-import { faBars, faBell, faChevronDown, faSearch } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useState } from "react"
-import { useDispatch } from "react-redux"
-import { setAdminModal } from "../redux/slice/modalSlice"
-import { useSelector } from "react-redux"
-import { RootState } from "../redux/store"
-import { GereAdmin } from "../modal/gereAdmin"
+import "../../assets/header.scss";
+import { faBars, faBell, faChevronDown, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setAdminModal } from "../redux/slice/modalSlice";
+import { RootState } from "../redux/store";
+import { GereAdmin } from "../modal/gereAdmin";
 
-export const Header = () =>{
-    const dispatch = useDispatch()
-    const  adminModalState = useSelector((state :  RootState) => state.modalStore)
-    const {adminModal} = adminModalState
+export const Header = () => {
+    const dispatch = useDispatch();
+    const { adminModal } = useSelector((state: RootState) => state.modalStore);
 
-    const [isInputVisible , SetIsInputVisible] = useState(false)
+    const [isInputVisible, setIsInputVisible] = useState(false);
 
-    const openModalAdmin = () =>{
-        dispatch(setAdminModal(
-            {
-                active : true
-            }
-        ))
-    }
+    const openModalAdmin = () => {
+        dispatch(setAdminModal({ active: true }));
+    };
 
+    const toggleSearchInput = () => {
+        setIsInputVisible(!isInputVisible);
+    };
 
-    const clickSearch = () =>{
-            SetIsInputVisible(!isInputVisible)
-            // console.log(isInputVisible);
-    }
-    return(
+    return (
         <>
-            <GereAdmin/>
-           <div className="topHead">
-                <div className="title">
-                    <h2>M.S.E</h2>
-                    < FontAwesomeIcon icon={faBars}/>
+            <GereAdmin />
+            <header className="header">
+                <div className="header-left">
+                    <h2 className="logo">M.S.E</h2>
+                    <FontAwesomeIcon icon={faBars} className="menu-icon" />
                 </div>
-                <div className="headG">
-                    <div className="dash">
-                        <h3>Tableau de bord</h3>
-                    </div>
-                    <div className="infoAdmin">
-                        <input type="text" name="" id="" style={{
-                            opacity: isInputVisible ? 1 : 0, // Contrôle de la visibilité via opacity
-                            width: isInputVisible ? '30vw' : '0', // Contrôle de la largeur de l'input
-                            padding: isInputVisible ? '.5vw 1vw .5vw 2vw' : '0', // Gestion de l'espace interne
-                            borderRadius: '4px',
-                            border: '1px solid #ccc',
-                            transition: 'all 0.5s ease-out', // Transition fluide pour toutes les propriétés
-                            pointerEvents: isInputVisible ? 'auto' : 'none', // Désactive l'input quand il est caché
-                            }} placeholder="livre édification......."/>
-                        <button type="submit" onClick={clickSearch}>
-                            <FontAwesomeIcon className="icon" icon={faSearch}/>
+
+                <div className="header-right">
+                    <h3 className="dashboard-title">Tableau de bord</h3>
+
+                    <div className="admin-section">
+                        <input
+                            type="text"
+                            className={`search-input ${isInputVisible ? 'visible' : ''}`}
+                            placeholder="Rechercher un livre..."
+                        />
+                        <button className="search-btn" onClick={toggleSearchInput}>
+                            <FontAwesomeIcon icon={faSearch} />
                         </button>
-                        <FontAwesomeIcon className="icon" icon={faBell}/>
-                        <div className="notif"><h3>3</h3></div>
-                        <img src="/images/profilLuc.jpg" alt="" />
-                        <button style={{cursor : "pointer"}} type="submit" onClick={openModalAdmin}><FontAwesomeIcon className="iconCherch" icon={faChevronDown}/></button>
+
+                        <div className="notification-icon">
+                            <FontAwesomeIcon icon={faBell} />
+                            <span className="badge">3</span>
+                        </div>
+
+                        <img src="/images/profilLuc.jpg" alt="Profil" className="profile-pic" />
+
+                        <button className="dropdown-btn" onClick={openModalAdmin}>
+                            <FontAwesomeIcon icon={faChevronDown} />
+                        </button>
                     </div>
                 </div>
-           </div>
+            </header>
         </>
-    )
-}
+    );
+};

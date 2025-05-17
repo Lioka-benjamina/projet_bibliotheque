@@ -33,6 +33,15 @@ interface Livre {
     editeur : string
 }
 
+interface Emprunt {
+    id : number
+    membre : Membre
+    livre :Livre
+    date_emprunt : Date
+    date_retour : Date
+    
+}
+
 // Ajoutez cette interface pour définir le type des options du Select
 interface SelectOption {
     value: string | number;
@@ -49,7 +58,9 @@ export const Emprunt = () =>{
         const { rendreModal } = modalState
         const {allMembre} = membreState
         const {allLivre} = livreState
-        const {addEmprunt} = empruntState
+        const {addEmprunt , allEmprunt} = empruntState
+
+        const listeEmprunt = allEmprunt.data
 
         const listeAdherants = allMembre
         const [selectAdherant , setSelectedAdherant] = useState("")
@@ -179,36 +190,38 @@ export const Emprunt = () =>{
                                         </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>001</td>
-                                                <td>Jean Dupont</td>
-                                                <td>Langages de l'amour</td>
-                                                <td>12/01/25</td>
-                                                <td>25/01/25</td>
-                                                <td>3jrs</td>
-                                                <td>en cours</td>
-                                                <td>
-                                                    <div className="rendre">
-                                                        <button type="submit"><FontAwesomeIcon icon={faUndo} className="iconRendre" onClick={openRendreModal}/></button>
-                                                        <p style={{cursor : "pointer"}} onClick={openRendreModal}>à rendre</p>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>002</td>
-                                                <td>Luc Hérvé</td>
-                                                <td>tout pour Lui</td>
-                                                <td>23/01/25</td>
-                                                <td>30/01/25</td>
-                                                <td>4jrs</td>
-                                                <td>en cours</td>
-                                                <td>
-                                                    <div className="rendre">
-                                                        <button type="submit"><FontAwesomeIcon icon={faUndo} className="iconRendre" onClick={openRendreModal}/></button>
-                                                        <p style={{cursor : "pointer"}} onClick={openRendreModal}>à rendre</p>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            {
+                                                listeEmprunt && Array.isArray(listeEmprunt) && listeEmprunt.map((emprunt : Emprunt)=>{
+                                                    const nomAdherant =  `${emprunt.membre.nom} ${emprunt.membre.prenom}`
+                                                    const titreLivre = emprunt.livre.titre
+                                                    const dateEmprunt = new Date(emprunt.date_emprunt).toLocaleDateString();
+                                                    const dateRetour = new Date(emprunt.date_retour).toLocaleDateString();
+
+                                                    const jour_restant = Math.ceil(
+                                                        (new Date(emprunt.date_retour).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+                                                    )
+
+                                                    const status = jour_restant < 0 ? "en retard" : "en cours"
+
+                                                    return(
+                                                        <tr>
+                                                            <td>{emprunt.id}</td>
+                                                            <td>{nomAdherant}</td>
+                                                            <td>{titreLivre}</td>
+                                                            <td>{dateEmprunt}</td>
+                                                            <td>{dateRetour}</td>
+                                                            <td>{jour_restant} jrs</td>
+                                                            <td>{status}</td>
+                                                            <td>
+                                                                <div className="rendre">
+                                                                    <button type="submit"><FontAwesomeIcon icon={faUndo} className="iconRendre" onClick={openRendreModal}/></button>
+                                                                    <p style={{cursor : "pointer"}} onClick={openRendreModal}>à rendre</p>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
                                         </tbody>
                                     </table>
                                 </div>

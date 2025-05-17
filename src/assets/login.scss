@@ -1,121 +1,236 @@
 @import "./library/mixin.scss";
 @import "./variable/variable.scss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
 @font-face {
-    font-family: inter;
-    src: url(./Inter_28pt-Regular.ttf);
+  font-family: inter;
+  src: url(./Inter_28pt-Regular.ttf);
 }
 
-*{
-    @include body();
+* {
+  @include body();
 }
 
-#pageLogin{
-    @include size();
-    @include flex($fd : row);
-    background: url(../../public/images/back_biblio.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-color:rgba(0,0,0,0.7);
-    background-blend-mode: multiply;
-    gap: 8vw;
-    .bienvenue{
-        width: 50%;
-        height: 100%;
-        @include flex();
-        h1,h2,p{
-            font-family:  'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        }
-        color: #F1F1F1;
-        h2{
-            margin: 1vw 0 1vw 0;
-        }
-        h1{
-            font-size: 3vw;
-        }
-        p{
-            font-size: 1vw;
-        }
+#pageLogin {
+  @include size();
+  @include flex($fd: row);
+  background: linear-gradient(135deg, #304352, #d7d2cc);
+  gap: 2vw;
+  
+  .bienvenue {
+    width: 50%;
+    height: 100%;
+    @include flex();
+    color: #F1F1F1;
+    text-align: center;
+    padding: 0 3vw;
+    
+    h1, h2, p {
+      font-family: 'Poppins', sans-serif;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
     }
-    form{
-        position: relative;
-        background: #fff;
-        opacity: .7;
-        padding: 7vw 1vw 1vw 1vw;
-        width: 25vw;
-        height: 26vw;
-        border-radius: .5vw;
-        #content-group{
-            #form-group{
-                #contenteInput{
-                    input{
-                        padding: 1vw;
-                        width: 100%;
-                        border-radius: .3vw;
-                        outline: none;
-                        border: 2px solid #aaa;
-                        // margin-bottom: 2vw;
-                        &::placeholder{
-                            font-family: inter;
-                            font-size: 1vw;
-                        }
-                        &:nth-last-child(1){
-                            margin-top: 1.5vw;
-                        }
-                        &:focus{
-                            border-color: $vert_pastel;
-                        }
-
-                    }
-                }
-            }
-        }
-        #contentAction{
-            width: 100%;
-            // padding: 1vw;
-            margin-top: 1vw;
-            #btnAction{
-                width: 100%;
-                padding: 0.5vw;
-                margin-top: 2vw;
-                border: none;
-                color: whitesmoke;
-                background: #252424;
-                font-family: inter;
-                border-radius: .3vw;
-                cursor: pointer;
-            }
-        }
-        #lienVersRegister{
-            width: 100%;
-            @include flex();
-            margin-top: 1vw;
-            p{
-                color: #0000008a;
-                font-family: inter;
-                font-size: .9vw;
-                .lien{
-                    text-decoration: none;
-                    color: $vert_pastel;
-                    font-family: inter;
-                }
-            }
-        }
-        .se_connecter{
-            position: absolute;
-            width: 20vw;
-            background: $vert_pastel;
-            padding: 2vw;
-            border-radius: .5vw;
-            top: -1vw;
-            left: 2.5vw;
-            @include flex();
-            h3{
-                color: white;
-                font-family: inter;
-                font-weight: normal;
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            }
-        }
+    
+    h1 {
+      font-size: 3.2vw;
+      margin-bottom: 1vw;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
+      background: linear-gradient(to right, #ffffff, #c2e9fb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
+    
+    h2 {
+      margin: 1vw 0 1.5vw 0;
+      font-size: 1.6vw;
+      font-weight: 400;
+      color: #f8f9fa;
+    }
+    
+    p {
+      font-size: 1.1vw;
+      opacity: 0.9;
+      line-height: 1.6;
+      max-width: 80%;
+      margin: 0 auto;
+    }
+  }
+  
+  form {
+    position: relative;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    padding: 8vw 2.5vw 2.5vw 2.5vw;
+    width: 28vw;
+    height: auto;
+    border-radius: 1.2vw;
+    backdrop-filter: blur(10px);
+    margin-right: 3vw;
+    
+    #content-group {
+      #form-group {
+        margin-bottom: 1.8vw;
+        
+        #contenteInput {
+          position: relative;
+          
+          &.input-with-icon {
+            display: flex;
+            align-items: center;
+            background-color: #f8f9fa;
+            border-radius: 0.8vw;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+            
+            &:focus-within {
+              border-color: $vert_pastel;
+              box-shadow: 0 0 0 3px rgba($vert_pastel, 0.2);
+              background-color: #fff;
+              
+              .input-icon {
+                color: $vert_pastel;
+              }
+            }
+            
+            .input-icon {
+              font-size: 1vw;
+              color: #aaa;
+              margin-left: 1.2vw;
+              transition: all 0.3s ease;
+            }
+            
+            input {
+              border: none;
+              background: transparent;
+              padding: 1.2vw 1vw;
+              width: 100%;
+              outline: none;
+              font-family: 'Poppins', sans-serif;
+              font-size: 0.95vw;
+              
+              &::placeholder {
+                font-family: 'Poppins', sans-serif;
+                font-size: 0.95vw;
+                color: #aaa;
+              }
+            }
+          }
+        }
+        
+        .error {
+          display: block;
+          margin-top: 0.6vw;
+          margin-left: 0.2vw;
+          color: #e74c3c;
+          font-family: 'Poppins', sans-serif;
+          font-size: 0.75vw;
+        }
+      }
+    }
+    
+    .error-message {
+      color: #e74c3c;
+      font-size: 0.85vw;
+      text-align: center;
+      margin: 0.8vw 0;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    #contentAction {
+      width: 100%;
+      margin-top: 2.5vw;
+      
+      #btnAction {
+        width: 100%;
+        padding: 1.2vw;
+        border: none;
+        color: white;
+        background: linear-gradient(to right, $vert_pastel, darken($vert_pastel, 10%));
+        font-family: 'Poppins', sans-serif;
+        font-size: 1vw;
+        font-weight: 500;
+        letter-spacing: 0.03em;
+        border-radius: 0.8vw;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba($vert_pastel, 0.3);
+        
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 15px rgba($vert_pastel, 0.4);
+        }
+        
+        &:active {
+          transform: translateY(0);
+        }
+      }
+    }
+    
+    #lienVersRegister {
+      width: 100%;
+      @include flex();
+      margin-top: 2vw;
+      
+      p {
+        color: #555;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.9vw;
+        
+        .lien {
+          text-decoration: none;
+          color: $vert_pastel;
+          font-family: 'Poppins', sans-serif;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          margin-left: 0.3vw;
+          display: inline-flex;
+          align-items: center;
+          
+          .register-icon {
+            margin-right: 0.3vw;
+            font-size: 0.8vw;
+            transition: transform 0.3s ease;
+          }
+          
+          &:hover {
+            color: darken($vert_pastel, 15%);
+            text-decoration: underline;
+            
+            .register-icon {
+              transform: scale(1.2);
+            }
+          }
+        }
+      }
+    }
+    
+    .se_connecter {
+      position: absolute;
+      width: 20vw;
+      background: linear-gradient(135deg, $vert_pastel, darken($vert_pastel, 15%));
+      padding: 1.6vw;
+      border-radius: 1vw;
+      top: -1.8vw;
+      left: 50%;
+      transform: translateX(-50%);
+      @include flex();
+      @include flex($fd: row);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      
+      .header-icon {
+        font-size: 1.3vw;
+        color: white;
+        margin-right: 0.8vw;
+      }
+      
+      h3 {
+        color: white;
+        font-size: 1.4vw;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+        letter-spacing: 0.05em;
+      }
+    }
+  }
 }

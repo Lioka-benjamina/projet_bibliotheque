@@ -1,10 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createEmprunt, findAllEmprunt, findOneEmprunt } from "../asyncThunk/empruntThunk";
 
+interface Membre {
+    id : number
+    nom : string
+    prenom : string
+    numero_mobile : number
+    email : string
+    genre : string
+    image : string
+    date_adhesion : Date
+}
+
+interface Livre {
+    id : number
+    titre : string
+    auteur : string
+    categorie : string
+    editeur : string
+}
+
 interface Emprunt {
     id : number
-    membre : number
-    livre :number
+    membre : Membre
+    livre :Livre
     date_emprunt : Date
     date_retour : Date
 }

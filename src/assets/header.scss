@@ -1,117 +1,135 @@
 @import "./library/mixin.scss";
 
 @font-face {
-    font-family: inter;
-    src: url(./Inter_28pt-Regular.ttf);
+  font-family: 'Inter';
+  src: url(./Inter_28pt-Regular.ttf);
 }
 
-*{
-    @include body();
+* {
+  @include body();
 }
 
+.header {
+  width: 100%;
+  height: 4vw;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2vw;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 
-// HEADER
-.topHead{
-    width: 100vw;
-    height: 4vw;
-    background: #ffffff;
+  .header-left {
     display: flex;
     align-items: center;
-    position: sticky;
-    z-index: 0;
-    top: 0;
-    .title{
-        width: 15%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 1.5vw;
-        h2{
-            font-family: inter;
-            opacity: .6;
-        }
-    }
-    .headG{
-        width: calc(100% - 15%);
-        height: 100%;
-        display: flex;
-        align-items: center;
-        padding: 0 2vw;
-        justify-content: space-between;
-        .dash{
-            h3{
-                font-family: inter;
-                opacity: .8;
-                font-size: 1.2vw;
-            }
-        }
-        .infoAdmin{
-            height: 2.7vw;
-            // background: #ffffff;
-            border-radius: .3vw;
-            display: flex;
-            align-items: center;
-            padding: 0 3vw;
-            .notif{
-                h3{
-                    color: red;
-                font-family: inter;
-                font-size: 1vw;
-                font-weight: bold;
-                position: absolute;
-                right: 11.2vw;
-                top: .8vw;
-                }
-            }
-            button{
-                background: none;
-                border: none;
-                outline: none;
-                display: flex;
-                transition: .3s;
-                .icon{
-                    margin-right: 3vw;
-                    opacity: .5;
-                    cursor: pointer;
-                }
-            }
-            input{
-                border-radius: .5vw;
-                padding: .5vw 2vw;
-                border: none;
-                outline: none;
-                background: #fefefede;
-                margin-right: 1.5vw;
-                transition: .3s;
-                color: rgba(0, 0, 0, 0.74);
-                font-size: .9vw;
-                font-family: inter;
+    gap: 1vw;
 
-                &::placeholder {  /* Pour les navigateurs modernes */
-                    color: #888;
-                    font-family: inter;
-                    font-size: .9vw;
-                }
-            }
-            .icon{
-                margin-right: 3vw;
-                opacity: .5;
-                cursor: pointer;
-            }
-            img{
-                width: 2vw;
-                height: 2vw;
-                border-radius: 50%;
-                margin-right: .5vw;
-            }
-            button{
-                .iconCherch{
-                    font-size: 1vw;
-                    opacity: .8;
-                    cursor: pointer;
-                }
-            }
-        }
+    .logo {
+      font-family: 'Inter';
+      font-size: 1.5vw;
+      color: #222;
+      opacity: 0.7;
     }
+
+    .menu-icon {
+      font-size: 1.3vw;
+      cursor: pointer;
+      opacity: 0.6;
+    }
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+
+    .dashboard-title {
+      font-family: 'Inter';
+      font-size: 1.2vw;
+      opacity: 0.8;
+    }
+
+    .admin-section {
+      display: flex;
+      align-items: center;
+      gap: 1vw;
+      position: relative;
+
+      .search-input {
+        width: 0;
+        opacity: 0;
+        padding: 0;
+        border: none;
+        border-radius: 5px;
+        font-size: 0.9vw;
+        background: #f1f1f1;
+        color: #333;
+        transition: all 0.3s ease-in-out;
+
+        &::placeholder {
+          color: #aaa;
+        }
+
+        &.visible {
+          width: 20vw;
+          opacity: 1;
+          padding: 0.5vw 1vw;
+          border: 1px solid #ccc;
+        }
+      }
+
+      .search-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #666;
+        font-size: 1vw;
+
+        &:hover {
+          color: #333;
+        }
+      }
+
+      .notification-icon {
+        position: relative;
+        font-size: 1.2vw;
+        color: #555;
+
+        .badge {
+          position: absolute;
+          top: -0.4vw;
+          right: -0.6vw;
+          background: red;
+          color: white;
+          font-size: 0.7vw;
+          padding: 0.1vw 0.4vw;
+          border-radius: 1vw;
+          font-weight: bold;
+        }
+      }
+
+      .profile-pic {
+        width: 2.3vw;
+        height: 2.3vw;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ddd;
+      }
+
+      .dropdown-btn {
+        background: none;
+        border: none;
+        font-size: 1.2vw;
+        cursor: pointer;
+        color: #444;
+
+        &:hover {
+          color: #000;
+        }
+      }
+    }
+  }
 }

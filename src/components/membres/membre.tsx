@@ -9,7 +9,7 @@ import { setAddModal, setDeleteModal } from "../redux/slice/modalSlice"
 import { useEffect, useState } from "react"
 import { deleteMembre, findAllMembre } from "../redux/asyncThunk/membreThunk"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {  faEye, faPen, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { faEye, faPen, faTrash, faSearch, faUserPlus } from "@fortawesome/free-solid-svg-icons"
 import Delete from "../modal/delete"
 import { setCleanMembre, setSearchMembre } from "../redux/slice/membreSlice"
 import { toast } from "react-toastify"
@@ -102,8 +102,18 @@ export const Membre = () =>{
                     <div className="principaleMembre">
                         <div className="titleAndAjout">
                             <h3>Liste des adhérants</h3>
-                            <input type="text" placeholder="exemple: rakoto" onChange={handleSearch} className="recherche"/>
-                            <button className="ajout" onClick={openModalAdd}>Ajouter</button>
+                            <div className="search-container">
+                                <FontAwesomeIcon icon={faSearch} className="search-icon" />
+                                <input 
+                                    type="text" 
+                                    placeholder="Rechercher un membre..." 
+                                    onChange={handleSearch} 
+                                    className="recherche"
+                                />
+                            </div>
+                            <button className="ajout" onClick={openModalAdd}>
+                                Ajouter
+                            </button>
                         </div>
                         <hr />
                         <div className="listePersonne">
@@ -131,21 +141,21 @@ export const Membre = () =>{
                                                 <p>Sexe : <span>{liste.genre}</span></p>
                                             </div>
                                             <div className="action">
-                                                <button className="btn_action">
+                                                <button className="btn_action" title="Voir les détails">
                                                     <FontAwesomeIcon icon={faEye} className="font_action"/>
                                                 </button>
-                                                <button className="btn_action">
+                                                <button className="btn_action" title="Modifier">
                                                     <FontAwesomeIcon icon={faPen} className="font_action"/>
                                                 </button>
-                                                <button className="btn_action" onClick={()=>handleDelete(liste.id)}>
-                                                <FontAwesomeIcon icon={faTrash} className="font_action"/>
+                                                <button className="btn_action" onClick={()=>handleDelete(liste.id)} title="Supprimer">
+                                                    <FontAwesomeIcon icon={faTrash} className="font_action"/>
                                                 </button>
                                             </div>
                                         </div>
                                     )
                                 ) : 
                                 <div className="aucunMembre">
-                                    <p>{loading ? "chargement" : "aucun membre"}</p>
+                                    <p>{loading ? "Chargement en cours..." : "Aucun membre trouvé"}</p>
                                 </div>
                             }
                         </div>

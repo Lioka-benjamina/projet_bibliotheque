@@ -11,6 +11,8 @@ import { toast } from "react-toastify"
 import { clearMsg, setCleanAuth } from "../redux/slice/authSlice"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
+// Import des icônes
+import { FaEnvelope, FaLock, FaSignInAlt, FaUser } from 'react-icons/fa'
 
 export const Login = () =>{
     const dispatch = useDispatch<AppDispatch>()
@@ -21,8 +23,8 @@ export const Login = () =>{
     const navigate = useNavigate()
 
     const schema = yup.object({
-        email : yup.string().required("Remplir le champ email"),
-        password : yup.string().required("Remplir le champ mot de pass").min( 6 , {message : "6 caractères au moins"})
+        email : yup.string().required("Veuillez saisir votre adresse email"),
+        password : yup.string().required("Veuillez saisir votre mot de passe").min( 6 , {message : "6 caractères au moins"})
     })
 
     const {handleSubmit , register , formState: {errors} } = useForm({
@@ -46,7 +48,7 @@ export const Login = () =>{
                 auth : {token : tkn}
             })
             navigate("/accueil")
-            toast.success("tafiditra ingahy oooohhhhh")
+            toast.success("Bienvenue dans votre tableau de bord !")
         }
 
         return () => {
@@ -58,46 +60,64 @@ export const Login = () =>{
         <>
         <section id="pageLogin">
             <div className="bienvenue">
-                <h1>BIENVENUE DANS MSE Controls </h1>
-                <h2>Ici , on gère . on s'amuse</h2>
-                <p>Notre bibliothèque préférer</p>
+                <h1>BIENVENUE DANS MSE CONTROLS</h1>
+                <h2>La plateforme qui simplifie votre gestion</h2>
+                <p>Notre solution intuitive pour une expérience utilisateur optimale</p>
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="se_connecter">
+                    <FaSignInAlt className="header-icon" />
                     <h3>Se connecter</h3>
                 </div>
                 <div id="content-group">
                     <div id="form-group">
-                        {/* <label htmlFor="">Email</label> */}
-                        <div id="contenteInput">
-                            <input type="email" placeholder="Adresse email" {...register("email")}  autoComplete="off"/>
+                        <div id="contenteInput" className="input-with-icon">
+                            <FaEnvelope className="input-icon" />
+                            <input 
+                                type="email" 
+                                placeholder="Votre adresse email" 
+                                {...register("email")}  
+                                autoComplete="off"
+                            />
                         </div>
                         {
                             errors.email && (
-                                // <div></div>
-                                <small className="error" style={{color : "red",fontFamily:"calibri",fontSize : ".8vw"}}>{errors.email.message}</small>
+                                <small className="error">{errors.email.message}</small>
                             )
                         }
                     </div>
                     <div id="form-group">
-                        {/* <label htmlFor="">Mot de passe</label> */}
-                        <div id="contenteInput">
-                            <input type="password" placeholder="votre mot de passe" {...register("password")} autoComplete="off"/>
+                        <div id="contenteInput" className="input-with-icon">
+                            <FaLock className="input-icon" />
+                            <input 
+                                type="password" 
+                                placeholder="Votre mot de passe" 
+                                {...register("password")} 
+                                autoComplete="off"
+                            />
                         </div>
                         {
                             errors.password && (
-                                <div></div>
-                                // <small className="error" style={{color : "red",fontFamily:"calibri",fontSize : ".8vw"}}>{errors.password.message}</small>
+                                <small className="error">{errors.password.message}</small>
                             )
                         }
                     </div>
                 </div>
-                <p>{authState.message}</p>
+                {authState.message && <p className="error-message">{authState.message}</p>}
                 <div id="contentAction">
-                    <button id="btnAction">{authState.loading    ? "Connexion en cours" : "Se connecter"}</button>
+                    <button id="btnAction">
+                        {authState.loading ? "Connexion en cours..." : "Se connecter"}
+                    </button>
                 </div>
                 <div id="lienVersRegister">
-                    <p>Vous n'avez pas un compte ? <span><Link to={"/register"} className="lien">S'inscrire</Link></span></p>
+                    <p>
+                        Vous n'avez pas de compte ? 
+                        <span>
+                            <Link to={"/register"} className="lien">
+                                <FaUser className="register-icon" /> S'inscrire
+                            </Link>
+                        </span>
+                    </p>
                 </div>
             </form>
         </section>

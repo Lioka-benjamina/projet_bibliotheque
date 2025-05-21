@@ -1,6 +1,17 @@
 @import "./library/mixin.scss";
 @import "../assets/variable/variable.scss";
 
+// Nouvelle palette de couleurs modernes
+$vert_pastel: #7dd3ae;
+$vert_fonce: #34a883;
+$accent_violet: #8e77f7;
+$accent_coral: #ff7e67;
+$bg_light: #f9fbfd;
+$text_dark: #2c3e50;
+$text_light: #7a8c98;
+$border_light: #e9ecf1;
+$shadow_soft: 0 6px 20px rgba(176, 190, 197, 0.15);
+
 @font-face {
     font-family: 'Inter';
     src: url(./Inter_28pt-Regular.ttf);
@@ -24,29 +35,30 @@
         
         .empruntContent {
             flex-grow: 1;
-            background: #f5f7f8;
-            padding: 1.5vw;
+            background: $bg_light;
+            padding: 1.3vw;
             overflow-y: auto;
             
             .actuStat {
                 width: 100%;
-                padding: 1vw;
-                margin-bottom: 2vw;
+                padding: 1.2vw;
+                margin-bottom: 1.5vw;
                 background: #ffffff;
                 display: flex;
                 flex-direction: column;
-                gap: 1vw;
+                gap: 0.8vw;
                 position: relative;
-                border-radius: 0.6vw;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+                border-radius: 0.8vw;
+                box-shadow: $shadow_soft;
+                border-top: 3px solid $vert_pastel;
                 
                 .empt {
                     font-family: 'Inter', sans-serif;
-                    font-size: 1.4vw;
-                    color: #2c3e50;
+                    font-size: 1.2vw;
+                    color: $text_dark;
                     font-weight: 600;
                     padding-bottom: 0.5vw;
-                    border-bottom: 2px solid #e0e6ed;
+                    border-bottom: 2px solid $border_light;
                 }
                 
                 .statAnal {
@@ -57,72 +69,74 @@
                     margin-bottom: 0.5vw;
                     
                     input {
-                        flex: 1;
-                        padding: 0.8vw 1vw 0.8vw 2.5vw;
-                        border: 1px solid #e0e6ed;
-                        border-radius: 0.4vw;
+                        width: 35vw;
+                        padding: 0.7vw 1vw 0.7vw 2.5vw;
+                        border: 1px solid $border_light;
+                        border-radius: 0.8rem;
                         outline: none;
-                        color: #2c3e50;
-                        font-size: 0.9vw;
+                        color: $text_dark;
+                        font-size: 0.85vw;
                         font-family: 'Inter', sans-serif;
                         transition: all 0.3s ease;
                         
                         &::placeholder {
-                            color: #95a5a6;
-                            font-size: 0.9vw;
+                            color: $text_light;
+                            font-size: 0.85vw;
                             font-family: 'Inter', sans-serif;
                         }
                         
                         &:focus {
-                            border-color: $vert_fonce;
-                            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+                            border-color: $vert_pastel;
+                            background: white;
+                            box-shadow: 0 0 0 4px rgba(125, 211, 174, 0.1);
                         }
                     }
                     
                     .iconFilter {
                         position: absolute;
                         left: 2.2vw;
-                        color: #7f8c8d;
-                        font-size: 1vw;
+                        color: $text_light;
+                        font-size: 0.9vw;
                     }
                     
                     button {
                         border: none;
                         color: white;
-                        background: $vert_fonce;
-                        border-radius: 0.4vw;
-                        padding: 0.8vw 1.5vw;
+                        background: linear-gradient(135deg, $vert_pastel, $vert_fonce);
+                        box-shadow: 0 4px 12px rgba(52, 168, 131, 0.25);
+                        border-radius: 0.6vw;
+                        padding: 0.7vw 1.3vw;
                         font-family: 'Inter', sans-serif;
                         font-weight: 500;
-                        font-size: 0.9vw;
+                        font-size: 0.85vw;
                         cursor: pointer;
                         transition: all 0.2s ease;
                         
                         &:hover {
-                            background: darken($vert_fonce, 5%);
+                            background: linear-gradient(135deg, $vert_fonce, darken($vert_fonce, 5%));
+                            box-shadow: 0 6px 16px rgba(52, 168, 131, 0.35);
                             transform: translateY(-2px);
-                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                         }
                     }
                 }
                 
                 .empruntEnCour {
                     width: 100%;
-                    border-radius: 0.4vw;
+                    border-radius: 0.6vw;
                     overflow: hidden;
                     
                     table {
                         border-collapse: collapse;
                         width: 100%;
                         background-color: #fff;
-                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
                         
                         th, td {
-                            padding: 1vw 0.8vw;
+                            padding: 0.9vw 0.8vw;
                             text-align: left;
                             font-family: 'Inter', sans-serif;
-                            font-size: 0.9vw;
-                            border-bottom: 1px solid #ecf0f1;
+                            font-size: 0.85vw;
+                            border-bottom: 1px solid $border_light;
                             
                             .rendre {
                                 display: flex;
@@ -130,8 +144,8 @@
                                 gap: 0.5vw;
                                 
                                 .iconRendre {
-                                    color: $vert_fonce;
-                                    font-size: 1vw;
+                                    color: $accent_violet;
+                                    font-size: 0.9vw;
                                     transition: transform 0.2s ease;
                                 }
                                 
@@ -144,7 +158,7 @@
                                     transition: all 0.2s ease;
                                     
                                     &:hover {
-                                        background: rgba(46, 204, 113, 0.1);
+                                        background: rgba($accent_violet, 0.1);
                                         
                                         .iconRendre {
                                             transform: rotate(-45deg);
@@ -154,8 +168,8 @@
                                 
                                 p {
                                     font-family: 'Inter', sans-serif;
-                                    color: $vert_fonce;
-                                    font-size: 0.8vw;
+                                    color: $accent_violet;
+                                    font-size: 0.75vw;
                                     font-weight: 500;
                                 }
                             }
@@ -163,17 +177,17 @@
                         
                         th {
                             background-color: #f8f9fa;
-                            color: #34495e;
+                            color: $text_dark;
                             font-weight: 600;
                             text-transform: uppercase;
                             font-family: 'Inter', sans-serif;
-                            font-size: 0.75vw;
+                            font-size: 0.7vw;
                             letter-spacing: 0.05vw;
-                            border-bottom: 2px solid #e0e6ed;
+                            border-bottom: 2px solid $border_light;
                         }
                         
                         tr:hover {
-                            background-color: #f8fafc;
+                            background-color: rgba($vert_pastel, 0.03);
                         }
                         
                         tbody tr:last-child td {
@@ -187,25 +201,27 @@
                 display: flex;
                 gap: 1.5vw;
                 height: auto;
-                margin-bottom: 2vw;
+                margin-top: 1.5vw;
+                margin-bottom: 1.5vw;
                 
                 .new_empreint_ajout {
                     flex: 1;
                     background: #ffffff;
-                    border-radius: 0.6vw;
+                    border-radius: 0.8vw;
                     overflow: hidden;
-                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+                    box-shadow: $shadow_soft;
+                    border-top: 3px solid $vert_pastel;
                     
                     .title {
-                        padding: 1.2vw 1.5vw;
+                        padding: 1vw 1.5vw;
                         width: 100%;
-                        background: $vert_fonce;
+                        background: linear-gradient(135deg, $vert_pastel, $vert_fonce);
                         
                         .titleContent {
                             color: white;
                             font-family: 'Inter', sans-serif;
                             font-weight: 600;
-                            font-size: 1.1vw;
+                            font-size: 1vw;
                         }
                     }
                     
@@ -214,82 +230,99 @@
                         background: #ffffff;
                         
                         .formulaire {
-                            margin-bottom: 1.5vw;
+                            margin-bottom: 1.3vw;
                             
                             label {
                                 display: block;
                                 font-family: 'Inter', sans-serif;
-                                font-size: 0.9vw;
+                                font-size: 0.85vw;
                                 font-weight: 500;
-                                color: #2c3e50;
-                                margin-bottom: 0.5vw;
+                                color: $text_dark;
+                                margin-bottom: 0.4vw;
                             }
                             
                             input {
                                 width: 100%;
-                                padding: 0.9vw 1vw;
+                                padding: 0.8vw 1vw;
                                 outline: none;
-                                font-size: 0.9vw;
+                                font-size: 0.85vw;
                                 font-family: 'Inter', sans-serif;
-                                color: #2c3e50;
-                                border-radius: 0.4vw;
-                                border: 1px solid #e0e6ed;
+                                color: $text_dark;
+                                border-radius: 0.6vw;
+                                border: 1px solid $border_light;
                                 transition: all 0.3s ease;
                                 
                                 &::placeholder {
                                     font-family: 'Inter', sans-serif;
-                                    font-size: 0.9vw;
-                                    color: #95a5a6;
+                                    font-size: 0.85vw;
+                                    color: $text_light;
                                 }
                                 
                                 &:focus {
-                                    border-color: $vert_fonce;
-                                    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+                                    border-color: $vert_pastel;
+                                    box-shadow: 0 0 0 3px rgba(125, 211, 174, 0.1);
                                 }
                             }
                         }
                         
                         button {
                             width: 100%;
-                            padding: 0.9vw 1.5vw;
+                            padding: 0.8vw 1.5vw;
                             font-family: 'Inter', sans-serif;
-                            font-size: 0.9vw;
+                            font-size: 0.85vw;
                             font-weight: 600;
                             cursor: pointer;
-                            border-radius: 0.4vw;
+                            border-radius: 0.6vw;
                             border: none;
-                            background: $vert_fonce;
+                            background: linear-gradient(135deg, $vert_pastel, $vert_fonce);
                             color: white;
                             text-transform: uppercase;
-                            letter-spacing: 0.05vw;
+                            letter-spacing: 0.03vw;
                             transition: all 0.2s ease;
                             
                             &:hover {
-                                background: darken($vert_fonce, 5%);
+                                background: linear-gradient(135deg, $vert_fonce, darken($vert_fonce, 5%));
                                 transform: translateY(-2px);
-                                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                                box-shadow: 0 4px 12px rgba(52, 168, 131, 0.25);
                             }
                         }
                     }
                 }
 
                 .retard {
-                    width: 40%;
+                    width: 40%; // Largeur conservée comme demandé
                     background: #ffffff;
-                    border-radius: 0.6vw;
+                    border-radius: 0.8vw;
                     overflow: hidden;
-                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+                    box-shadow: $shadow_soft;
+                    border-top: 3px solid $vert_pastel; // Changé de $accent_coral à $vert_pastel
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                    
+                    &:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 10px 25px rgba(125, 211, 174, 0.18);
+                    }
                     
                     .title {
                         width: 100%;
-                        background: $vert_fonce;
-                        padding: 1.2vw 1.5vw;
+                        background: linear-gradient(135deg, $vert_pastel, $vert_fonce); // Changé pour la palette verte
+                        padding: 1vw 1.5vw;
+                        display: flex;
+                        align-items: center;
                         
                         h3 {
                             color: white;
                             font-family: 'Inter', sans-serif;
                             font-weight: 600;
-                            font-size: 1.1vw;
+                            font-size: 1vw;
+                            margin: 0;
+                            display: flex;
+                            align-items: center;
+                            
+                            .icon {
+                                margin-right: 0.5vw;
+                                font-size: 1.1vw;
+                            }
                         }
                     }
                     
@@ -297,36 +330,131 @@
                         overflow-y: auto;
                         overflow-x: hidden;
                         width: 100%;
-                        height: 26vw;
+                        height: 26vw; // Hauteur conservée
                         padding: 0;
+                        
+                        // Style de la scrollbar
+                        &::-webkit-scrollbar {
+                            width: 0.4vw;
+                        }
+                        
+                        &::-webkit-scrollbar-track {
+                            background: $bg_light;
+                        }
+                        
+                        &::-webkit-scrollbar-thumb {
+                            background: rgba($vert_pastel, 0.6);
+                            border-radius: 0.2vw;
+                        }
                         
                         .list {
                             width: 100%;
                             display: flex;
                             flex-direction: column;
                             padding: 1vw 1.5vw;
-                            transition: background 0.2s ease;
+                            transition: all 0.2s ease;
+                            position: relative;
                             
                             &:hover {
-                                background: #f8fafc;
+                                background: rgba($vert_pastel, 0.05);
+                                
+                                .actions {
+                                    opacity: 1;
+                                    transform: translateX(0);
+                                }
                             }
                             
                             .nom {
                                 font-family: 'Inter', sans-serif;
-                                font-size: 0.95vw;
-                                font-weight: 500;
-                                color: #2c3e50;
-                                margin-bottom: 0.3vw;
+                                font-size: 0.9vw;
+                                font-weight: 600; // Légèrement plus en gras
+                                color: $text_dark;
+                                margin-bottom: 0.4vw;
+                                display: flex;
+                                align-items: center;
+                                
+                                .icon-user {
+                                    margin-right: 0.4vw;
+                                    color: $vert_pastel;
+                                    font-size: 0.9vw;
+                                }
                             }
                             
                             .livre {
                                 font-family: 'Inter', sans-serif;
-                                font-size: 0.85vw;
-                                color: #7f8c8d;
+                                font-size: 0.8vw;
+                                color: $text_light;
+                                display: flex;
+                                align-items: center;
+                                width: 100vw;
+                                height: 2vh;
+                                
+                                .icon-book {
+                                    margin-right: 0.4vw;
+                                    color: $accent_violet;
+                                    font-size: 0.8vw;
+                                }
                                 
                                 span {
                                     font-weight: 600;
-                                    color: #34495e;
+                                    color: $text_dark;
+                                    margin-right: 0.2vw;
+                                }
+                            }
+                            
+                            .date {
+                                margin-top: 0.3vw;
+                                font-family: 'Inter', sans-serif;
+                                font-size: 0.75vw;
+                                color: $accent_violet;
+                                display: flex;
+                                align-items: center;
+                                
+                                .icon-clock {
+                                    margin-right: 0.3vw;
+                                    font-size: 0.75vw;
+                                }
+                            }
+                            
+                            .actions {
+                                position: absolute;
+                                right: 1.5vw;
+                                top: 50%;
+                                transform: translateY(-50%) translateX(10px);
+                                opacity: 0;
+                                transition: all 0.2s ease;
+                                display: flex;
+                                gap: 0.5vw;
+                                
+                                button {
+                                    width: 2.2vw;
+                                    height: 2.2vw;
+                                    border-radius: 50%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    border: none;
+                                    background: rgba($vert_pastel, 0.1);
+                                    color: $vert_fonce;
+                                    font-size: 0.9vw;
+                                    cursor: pointer;
+                                    transition: all 0.2s ease;
+                                    
+                                    &:hover {
+                                        background: $vert_pastel;
+                                        color: white;
+                                        transform: translateY(-2px);
+                                    }
+                                    
+                                    &.warning {
+                                        background: rgba($accent_coral, 0.1);
+                                        color: $accent_coral;
+                                        
+                                        &:hover {
+                                            background: $accent_coral;
+                                            color: white;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -335,7 +463,7 @@
                             margin: 0;
                             border: none;
                             height: 1px;
-                            background: #ecf0f1;
+                            background: $border_light;
                         }
                     }
                 }
@@ -363,85 +491,96 @@
         top: 0;
         left: 0;
         opacity: 0;
-        background: rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(2px);
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(3px);
         transition: opacity 0.3s ease;
     }
     
     .modal {
-        width: 36vw;
+        width: 34vw;
         padding: 0;
         z-index: 5;
         background: white;
-        border-radius: 0.6vw;
+        border-radius: 0.8vw;
         visibility: hidden;
         opacity: 0;
         position: relative;
         overflow: hidden;
         transform: scale(0.95);
         transition: all 0.3s ease;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        border-top: 3px solid $vert_pastel;
         
         h3 {
             font-family: 'Inter', sans-serif;
-            padding: 1.2vw 1.5vw;
+            padding: 1vw 0.5vw;
             margin: 0;
-            background: $vert_fonce;
+            background: linear-gradient(135deg, $vert_pastel, $vert_fonce);
             color: white;
-            font-size: 1.1vw;
-            font-weight: 600;
+            font-size: 1vw;
+            text-transform: capitalize;
+            font-weight: 500;
         }
         
-        .content {
-            padding: 1.5vw;
-        }
-        
-        p {
-            font-family: 'Inter', sans-serif;
-            margin: 0.5vw 0;
-            font-size: 0.95vw;
-            line-height: 1.5;
-            color: #34495e;
-            
-            span {
-                font-weight: 600;
-                text-transform: capitalize;
+        .text{
+            margin: 1vw 0;
+            p {
+                font-family: 'Inter', sans-serif;
+                padding: 0.5vw;
+                font-size: 0.9vw;
+                line-height: 1.6;
+                color: $text_dark;
+                
+                span {
+                    font-weight: 600;
+                    text-transform: capitalize;
+                }
             }
         }
         
         .action {
             width: 100%;
-            margin-top: 1.5vw;
             display: flex;
-            gap: 1vw;
+            gap: 0.8vw;
+            padding: 0.5vw;
             
             button {
                 flex-grow: 1;
                 border: none;
-                padding: 0.9vw;
-                border-radius: 0.4vw;
+                padding: 0.8vw;
+                border-radius: 0.6vw;
                 font-family: 'Inter', sans-serif;
-                font-size: 0.9vw;
+                font-size: 0.85vw;
                 font-weight: 600;
                 cursor: pointer;
                 transition: all 0.2s ease;
                 
                 &:first-child {
-                    background: #f0f3f5;
-                    color: #7f8c8d;
+                    background: $border_light;
+                    color: $text_light;
                     
                     &:hover {
-                        background: #e0e6ed;
+                        background: darken($border_light, 5%);
+                        transform: translateY(-2px);
                     }
                 }
                 
                 &:last-child {
-                    background: $vert_fonce;
+                    background: linear-gradient(135deg, $vert_pastel, $vert_fonce);
                     color: white;
                     
                     &:hover {
-                        background: darken($vert_fonce, 5%);
+                        background: linear-gradient(135deg, $vert_fonce, darken($vert_fonce, 5%));
                         transform: translateY(-2px);
+                    }
+                }
+                
+                &:nth-child(2){
+                    background: $accent_violet;
+                    color: white;
+                    &:hover{
+                        transform: translateY(-2px);
+                        background: darken($accent_violet, 5%);
                     }
                 }
             }
@@ -449,16 +588,23 @@
         
         .close {
             position: absolute;
-            top: 1.2vw;
-            right: 1.5vw;
+            top: 0.8vw;
+            right: 0.8vw;
+            width: 1.8vw;
+            height: 1.8vw;
+            border-radius: 50%;
+            @include flex();
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
             color: white;
-            font-size: 1.2vw;
+            font-size: 0.9vw;
             cursor: pointer;
-            opacity: 0.8;
-            transition: opacity 0.2s ease;
+            transition: all 0.3s ease;
             
-            &:hover {
-                opacity: 1;
+            &:hover{
+                background: $accent_coral;
+                color: white;
+                transform: rotate(90deg);
             }
         }
     }
@@ -481,55 +627,8 @@
 // Select Styles
 .selekt {
     font-family: 'Inter', sans-serif;
-    font-size: 0.9vw;
+    font-size: 0.85vw;
     
-    // .css-1s2u09g-control, .css-1pahdxg-control {
-    //     border-color: #e0e6ed;
-    //     box-shadow: none;
-    //     border-radius: 0.4vw;
-    //     min-height: 2.5vw;
-        
-    //     &:hover {
-    //         border-color: $vert_fonce;
-    //     }
-    // }
-    
-    // .css-1pahdxg-control {
-    //     border-color: $vert_fonce;
-    //     box-shadow: 0 0 0 1px $vert_fonce;
-    // }
-    
-    // .css-14el2xx-placeholder {
-    //     color: #95a5a6;
-    // }
-    
-    // .css-1okebmr-indicatorSeparator {
-    //     background-color: #e0e6ed;
-    // }
-    
-    // .css-tlfecz-indicatorContainer {
-    //     color: #95a5a6;
-        
-    //     &:hover {
-    //         color: #34495e;
-    //     }
-    // }
-    
-    // .css-26l3qy-menu {
-    //     border-radius: 0.4vw;
-    //     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        
-    //     .css-4ljt47-MenuList {
-    //         padding: 0.5vw 0;
-    //     }
-        
-    //     .css-1n7v3ny-option {
-    //         background-color: rgba(46, 204, 113, 0.1);
-    //     }
-        
-    //     .css-yt9ioa-option:hover {
-    //         background-color: #f8fafc;
-    //     }
-    // }
+    // Styles pour React Select (commentés dans le code original)
+    // Les sélecteurs ont été conservés mais adaptés à la nouvelle palette de couleurs
 }
-

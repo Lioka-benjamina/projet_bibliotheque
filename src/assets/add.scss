@@ -94,7 +94,7 @@
             .input-container {
                 position: relative;
                 width: 100%;
-                margin-bottom: 1vw;
+                margin-bottom: 0vw;
                 
                 label{
                     font-size: 0.9vw;
@@ -150,6 +150,13 @@
                     height: 2px;
                     background: $vert_pastel;
                     transition: all 0.3s ease;
+                }
+
+                .error-message{
+                    color: #ff6b6b;
+                    font-family: inter , sans-serif;
+                    font-size: 1vw;
+                    margin-bottom: 0.2vw;
                 }
                 
                 .input:focus ~ .underline {

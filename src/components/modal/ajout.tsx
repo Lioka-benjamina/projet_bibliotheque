@@ -16,7 +16,7 @@ import { FieldValues, useForm } from "react-hook-form"
 import { createMembre } from "../redux/asyncThunk/membreThunk"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
-import { setCleanMembre } from "../redux/slice/membreSlice"
+import { resetCreateStateMembre, setCleanMembre } from "../redux/slice/membreSlice"
 
 
 interface Membre {
@@ -69,7 +69,7 @@ const AddMembre = () =>{
             toast.success("Ajout d'un nouveau membre réussi")
             closeAddModal()
             reset()
-            setCleanMembre()
+            dispatch(resetCreateStateMembre())
         }
     },[addMembre.create_ok])
 

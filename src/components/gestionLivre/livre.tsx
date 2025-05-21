@@ -14,7 +14,7 @@ import { useSelector } from "react-redux"
 import { toast } from "react-toastify"
 import LivreDelete from "./deleteLivre"
 import { setDeleteLivre} from "../redux/slice/modalSlice"
-import { setCleanLivre, setCleanSearchLivre, setFilterByCategorie, setSearchLivre } from "../redux/slice/livreSlice"
+import { resetCreateStateLivre, setCleanLivre, setCleanSearchLivre, setFilterByCategorie, setSearchLivre } from "../redux/slice/livreSlice"
 import Pagination from "../pagination/paginationList"
 
 interface Livre {
@@ -72,6 +72,7 @@ export const GestionLivre = () =>{
         if(addLivre.create_ok){
             toast.success("Ajout d'un livre succès")
             reset()
+            dispatch(resetCreateStateLivre())
         }
     },[addLivre.create_ok])
 

@@ -176,11 +176,11 @@
                                 object-fit: cover;
                                 border-radius: 50%;
                                 transition: transform 0.5s ease;
+                                &:hover {
+                                    transform: scale(1.1);
+                                }
                             }
                             
-                            &:hover img {
-                                transform: scale(1.1);
-                            }
                         }
                         
                         .name{

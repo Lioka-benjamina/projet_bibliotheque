@@ -38,8 +38,10 @@ export const MembreSlice = createSlice({
         }
     },
     reducers : {
+        resetCreateStateMembre (state){
+            state.addMembre.create_ok = false;
+        },
         setCleanMembre(state){
-            state.addMembre.create_ok = false,
             state.removeMembre.delete_ok = false
         },
         setSearchMembre(state , action){
@@ -106,4 +108,4 @@ export const MembreSlice = createSlice({
 
 })
 
-export const {setCleanMembre,setSearchMembre} = MembreSlice.actions
+export const {setCleanMembre,setSearchMembre , resetCreateStateMembre} = MembreSlice.actions

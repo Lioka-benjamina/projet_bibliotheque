@@ -38,9 +38,14 @@ export const LivreSlice = createSlice({
         }
     },
     reducers : {
+        resetCreateStateLivre: (state) => {
+            state.addLivre.create_ok = false;
+        }, 
+
         setCleanLivre(state){
             state.removeLivre.delete_ok = false
         },
+
         setSearchLivre(state, action) {
             const searchValue = action.payload.toLowerCase();   //met tout en minuscule pour comparaison (On récupère la valeur tapée par l’utilisateur et on la met en minuscule pour faire une recherche insensible à la casse.)
 
@@ -131,4 +136,4 @@ export const LivreSlice = createSlice({
     },
 })
 
-export const {setCleanLivre , setSearchLivre, setCleanSearchLivre , setFilterByCategorie} = LivreSlice.actions
+export const {setCleanLivre , setSearchLivre, setCleanSearchLivre , setFilterByCategorie , resetCreateStateLivre} = LivreSlice.actions

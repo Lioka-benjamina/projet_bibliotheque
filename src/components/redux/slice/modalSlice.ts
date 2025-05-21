@@ -7,11 +7,13 @@ export const ModalSlice = createSlice({
             active : false
         },
         rendreModal : {
+            id: null as number | null,
             active : false
         },
         addModal : {
             active : false 
         },
+        
         deleteModal : {
             id:null,
             confirm : false ,

@@ -2,17 +2,19 @@ import "../../assets/emprunt.scss"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Header } from "../header/header"
 import { Navigation } from "../navigation/navigation"
-import { faFilter, faUndo } from "@fortawesome/free-solid-svg-icons"
+import { faFilter, faL, faUndo } from "@fortawesome/free-solid-svg-icons"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch, RootState } from "../redux/store"
 import { setRendreModal } from "../redux/slice/modalSlice"
 import { RendreModal } from "../modal/rendre"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Select from "react-select"
 import { FieldValues, useForm } from "react-hook-form"
 import { createEmprunt, findAllEmprunt } from "../redux/asyncThunk/empruntThunk"
 import { toast } from "react-toastify"
 import { resetCreateState } from "../redux/slice/empruntSlice"
+import Pagination from "../pagination/paginationList"
+import { FaBookOpen, FaClock, FaEnvelope, FaExclamationTriangle, FaUser } from "react-icons/fa"
 
 interface Membre {
     id : number
@@ -55,21 +57,25 @@ export const Emprunt = () =>{
         const livreState = useSelector((state : RootState)=>state.livreStore)
         const empruntState = useSelector((state : RootState)=>state.empruntStore)
         const modalState = useSelector((state : RootState) => state.modalStore)
+        const {handleSubmit , reset , register} = useForm()
+        const [empruntsEnRetard, setEmpruntsEnRetard] = useState<Emprunt[]>([]);
+
+
         const { rendreModal } = modalState
         const {allMembre} = membreState
         const {allLivre} = livreState
         const {addEmprunt , allEmprunt} = empruntState
-
         const listeEmprunt = allEmprunt.data
 
+        
         const listeAdherants = allMembre
         const [selectAdherant , setSelectedAdherant] = useState("")
-
+        
         const listeLivre = allLivre
         const [selectLivre , setSelectLivre] = useState("")
+        
 
-        const {handleSubmit , reset , register} = useForm()
-
+        // CREATE
         const onSubmit = (data: FieldValues) => {
             console.log("Données soumises:", { selectAdherant, selectLivre, date_emprunt: data.date_emprunt, date_retour: data.date_retour });
             
@@ -78,7 +84,6 @@ export const Emprunt = () =>{
                 toast.error("Veuillez sélectionner les champs");
                 return;
             }
-        
             
             // Création et envoi du FormData
             const formData = new FormData();
@@ -86,7 +91,7 @@ export const Emprunt = () =>{
             formData.append("livre", selectLivre);
             formData.append("date_emprunt", data.date_emprunt);
             formData.append("date_retour", data.date_retour);
-        
+            
             // Ajoutez un log pour voir ce qui est envoyé
             console.log("FormData créé, contenu:");
             for (let pair of formData.entries()) {
@@ -95,6 +100,7 @@ export const Emprunt = () =>{
         
             dispatch(createEmprunt(formData));
         };
+
         
         useEffect(()=>{
             if(addEmprunt.create_ok){
@@ -106,29 +112,56 @@ export const Emprunt = () =>{
             }
         },[addEmprunt.create_ok,dispatch,reset])
 
+        useEffect(() => {
+            // Vérifiez si le modal est fermé et réinitialisez son état
+            if (!rendreModal.active) {
+              dispatch(setRendreModal({
+                id: null,
+                active: false
+              }));
+            }
+          }, [rendreModal.active, dispatch]);
+        
         // Charger les données nécessaires au chargement du composant
         useEffect(() => {
             dispatch(findAllEmprunt());
         }, [dispatch]);
 
+
+
+        useEffect(() => {
+            if (listeEmprunt && Array.isArray(listeEmprunt)) {
+                // Filtrer les emprunts en retard
+                const retards = listeEmprunt.filter((emprunt: Emprunt) => {
+                    const joursRestants = Math.ceil(
+                        (new Date(emprunt.date_retour).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+                    );
+                    return joursRestants < 0;
+                });
+                setEmpruntsEnRetard(retards);
+            }
+        }, [listeEmprunt]);
+
         
-        const openRendreModal = () =>{
+        const openRendreModal = (id : number) =>{
             dispatch(setRendreModal({
+                id : id ,
                 active : true,
             }))
+            // console.log(id);
         }
-
+        
         // Options de sélection sécurisées
-    const getMembreOptions = (): SelectOption[] => {
-        if (!allMembre || !allMembre.data || !Array.isArray(allMembre.data)) {
-            return [];
+        const getMembreOptions = (): SelectOption[] => {
+            if (!allMembre || !allMembre.data || !Array.isArray(allMembre.data)) {
+                return [];
         }
         return allMembre.data.map((adherent: Membre) => ({
             value: adherent.id,
             label: `${adherent.nom} ${adherent.prenom}`
         }));
     };
-
+    
     const getLivreOptions = (): SelectOption[] => {
         if (!allLivre || !allLivre.data || !Array.isArray(allLivre.data)) {
             return [];
@@ -138,7 +171,7 @@ export const Emprunt = () =>{
             label: livre.titre
         }));
     };
-
+    
     // Trouver le membre et le livre sélectionnés de manière sécurisée
     const getSelectedMembre = () => {
         if (!allMembre?.data || !Array.isArray(allMembre.data) || !selectAdherant) {
@@ -148,7 +181,7 @@ export const Emprunt = () =>{
         return membre ? { value: selectAdherant, label: `${membre.nom} ${membre.prenom}` } : null;
     };
 
-
+    
     const getSelectedLivre = () => {
         if (!allLivre?.data || !Array.isArray(allLivre.data) || !selectLivre) {
             return null;
@@ -156,6 +189,14 @@ export const Emprunt = () =>{
         const livre = allLivre.data.find(l => l.id === parseInt(selectLivre));
         return livre ? { value: selectLivre, label: livre.titre } : null;
     };
+    
+    //  P AGINATION
+    // const dataParPage = 3
+    // const [dataPage , setDataPage]=  useState<Emprunt[]>([])
+    // const [status , setStatus] = useState(false)
+
+    // const listeEmprunt = status ? dataPage : allEmprunt.data.slice(0 , dataParPage)
+
 
 
         return(
@@ -178,16 +219,16 @@ export const Emprunt = () =>{
                                 <div className="empruntEnCour">
                                     <table>
                                         <thead>
-                                        <tr>
-                                            <th>id Emprunt</th>
-                                            <th>Nom de l'adhérent</th>
-                                            <th>titre du livre</th>
-                                            <th>Date d'emprunt</th>
-                                            <th>Date de retour prévue</th>
-                                            <th>jours restant</th>
-                                            <th>Statut</th>
-                                            <th>Action</th>
-                                        </tr>
+                                            <tr>
+                                                <th>id Emprunt</th>
+                                                <th>Nom de l'adhérent</th>
+                                                <th>titre du livre</th>
+                                                <th>Date d'emprunt</th>
+                                                <th>Date de retour prévue</th>
+                                                <th>jours restant</th>
+                                                <th>Statut</th>
+                                                <th>Action</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
                                             {
@@ -201,10 +242,10 @@ export const Emprunt = () =>{
                                                         (new Date(emprunt.date_retour).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
                                                     )
 
-                                                    const status = jour_restant < 0 ? "en retard" : "en cours"
+                                                    const status = jour_restant < 0 ? "en retard" : jour_restant > 0 ? "en cours" : "à rendre aujourd'hui"
 
                                                     return(
-                                                        <tr>
+                                                        <tr key={emprunt.id}>
                                                             <td>{emprunt.id}</td>
                                                             <td>{nomAdherant}</td>
                                                             <td>{titreLivre}</td>
@@ -214,8 +255,8 @@ export const Emprunt = () =>{
                                                             <td>{status}</td>
                                                             <td>
                                                                 <div className="rendre">
-                                                                    <button type="submit"><FontAwesomeIcon icon={faUndo} className="iconRendre" onClick={openRendreModal}/></button>
-                                                                    <p style={{cursor : "pointer"}} onClick={openRendreModal}>à rendre</p>
+                                                                    <button type="submit"><FontAwesomeIcon icon={faUndo} className="iconRendre" onClick={()=>openRendreModal(emprunt.id)}/></button>
+                                                                    <p style={{cursor : "pointer"}} onClick={()=>openRendreModal(emprunt.id)}>{status === "en retard" ? "contacter l'adhérent" : "à rendre"}</p>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -227,8 +268,15 @@ export const Emprunt = () =>{
                                 </div>
 
                             </div>
+                                {/* <Pagination<Emprunt> 
+                                    dataParPage={dataParPage} 
+                                    data={listeEmprunt} 
+                                    dataActuel={setDataPage} 
+                                    setStatus={setStatus}
+                                    /> */}
 
                             <div className="newEmpreint">
+                                {/* AJOUT */}
                                 <div className="new_empreint_ajout">
                                     <div className="title">
                                         <h3 className="titleContent">Ajouter nouvelle emprunt</h3>
@@ -269,46 +317,55 @@ export const Emprunt = () =>{
                                         <button type="submit">ajouter</button>
                                     </form>
                                 </div>
+
+                                {/* RETARD */}
                                 <div className="retard">
                                     <div className="title">
-                                        <h3>Liste des emprunt en retard</h3>
+                                        <h3>
+                                            <FaExclamationTriangle className="icon" />
+                                            Liste des emprunts en retard
+                                        </h3>
                                     </div>
                                     <div className="boxList">
-                                        <div className="list">
-                                            <div className="nom">Ravo eleniste</div>
-                                            <div className="livre"><span>Livre : </span>Grace</div>
-                                        </div>
-                                        <hr />
-                                        <div className="list">
-                                            <div className="nom">Patrick</div>
-                                            <div className="livre"><span>Livre : </span>Prière</div>
-                                        </div>
-                                        <hr />
-                                        <div className="list">
-                                            <div className="nom">José</div>
-                                            <div className="livre"><span>Livre : </span>théologie systématique</div>
-                                        </div>
-                                        <hr />
-                                        <div className="list">
-                                            <div className="nom">Peter pon</div>
-                                            <div className="livre"><span>Livre : </span>Amazing grace</div>
-                                        </div>
-                                        <hr />
-                                        <div className="list">
-                                            <div className="nom">Diamondra</div>
-                                            <div className="livre"><span>Livre : </span>Histoire de l'ancien testament</div>
-                                        </div>
-                                        <hr />
-                                        <div className="list">
-                                            <div className="nom">Rabbin</div>
-                                            <div className="livre"><span>Livre : </span>Canonique</div>
-                                        </div>
-                                        <hr />
-                                        <div className="list">
-                                            <div className="nom">Nambinina</div>
-                                            <div className="livre"><span>Livre : </span>Connaitre Dieu</div>
-                                        </div>
-                                        <hr />
+                                        {empruntsEnRetard.length > 0 ? (
+                                            empruntsEnRetard.map((emprunt: Emprunt) => {
+                                                const joursRetard = Math.abs(Math.ceil(
+                                                    (new Date(emprunt.date_retour).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+                                                ));
+                                                
+                                                return (
+                                                    <React.Fragment key={emprunt.id}>
+                                                        <div className="list">
+                                                            <div className="nom">
+                                                                <FaUser className="icon-user" />
+                                                                {`${emprunt.membre.nom} ${emprunt.membre.prenom}`}
+                                                            </div>
+                                                            <div className="livre">
+                                                                <FaBookOpen className="icon-book" />
+                                                                <span>Livre : </span>{emprunt.livre.titre}
+                                                            </div>
+                                                            <div className="date">
+                                                                <FaClock className="icon-clock" />
+                                                                En retard de {joursRetard} jour{joursRetard > 1 ? 's' : ''}
+                                                            </div>
+                                                            <div className="actions">
+                                                                <button>
+                                                                    <FaEnvelope />
+                                                                </button>
+                                                                <button className="warning" onClick={() => openRendreModal(emprunt.id)}>
+                                                                    <FaExclamationTriangle />
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <hr />
+                                                    </React.Fragment>
+                                                );
+                                            })
+                                        ) : (
+                                            <div className="list">
+                                                <div className="nom">Aucun emprunt en retard</div>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
